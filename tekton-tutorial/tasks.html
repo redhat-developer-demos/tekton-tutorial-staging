@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Tasks :: Tekton Tutorial(Staging)</title>
-    <link rel="canonical" href="https://redhat-developer-docs.github.io/tekton-tutorial/tekton-tutorial/tasks.html">
+    <link rel="canonical" href="https://redhat-scholars.github.io/tekton-tutorial-staging/tekton-tutorial/tasks.html">
     <link rel="prev" href="pipeline-resources.html">
     <link rel="next" href="pipelines.html">
     <meta name="generator" content="Antora 2.3.3">
@@ -15,7 +15,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
-      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-developer-docs.github.io/tekton-tutorial">Tekton Tutorial(Staging)</a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/tekton-tutorial-staging">Tekton Tutorial(Staging)</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -326,6 +326,58 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/index.html">OpenShift Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html">Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-create-project">Create Project</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#required-tasks">Required Cluster Tasks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-update-cluster-tasks">Update Cluster Tasks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-deploy-app-from-git">Deploy Application from GitHub</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-create-java-ksvc-pipeline-tpl">Pipeline Template for Java and Knative Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#openshift-pipelines-prep-app-deploy">Prepare Application Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-create-ksvc-java-app">Deploy Application with Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-view-pipelines">View Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-watch-pipelines">Watch Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-view-app">Application Topology</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-pipeline-points">Points to Ponder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openshift/cloud_native_triggers.html">Triggers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -342,7 +394,7 @@
     <li><a href="tasks.html">Tasks</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/edit/master/documentation/modules/ROOT/pages/tasks.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/tekton-tutorial/edit/master/documentation/modules/ROOT/pages/tasks.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
@@ -645,7 +697,7 @@ Namespace:   tektontutorial
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">? Value for param `contextDir` of type `string`? (Default is `apps/greeter/java/quarkus`) apps/greeter/java/quarkus
 TaskRun started: source-lister-run-nbpvz
 Waiting for logs to be available...
-[git-source-git-source-qtp5j] {"level":"info","ts":1595743350.5350783,"caller":"git/git.go:105","msg":"Successfully cloned https://github.com/redhat-developer-demos/tekton-tutorial @ master in path /workspace/source"}
+[git-source-git-source-qtp5j] {"level":"info","ts":1595743350.5350783,"caller":"git/git.go:105","msg":"Successfully cloned https://github.com/redhat-scholars/tekton-tutorial @ master in path /workspace/source"}
 [git-source-git-source-qtp5j] {"level":"warn","ts":1595743350.5351503,"caller":"git/git.go:152","msg":"Unexpected error: creating symlink: symlink /tekton/home/.ssh /root/.ssh: file exists"}
 [git-source-git-source-qtp5j] {"level":"info","ts":1595743350.5708065,"caller":"git/git.go:133","msg":"Successfully initialized and updated submodules in path /workspace/source"}
 
@@ -712,7 +764,7 @@ Waiting for logs to be available...
 ...
 [git-source-git-source-rdr2k] {"level":"info","ts":1585065123.3817806,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/refs/heads/master: no such file or directory"}
 [git-source-git-source-rdr2k] {"level":"info","ts":1585065133.3997571,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/refs/heads/master: no such file or directory"}
-[git-source-git-source-rdr2k] {"level":"info","ts":1585065138.9021251,"logger":"fallback-logger","caller":"git/git.go:102","msg":"Successfully cloned https://github.com/redhat-developer-demos/tekton-tutorial @ master in path /workspace/source"}
+[git-source-git-source-rdr2k] {"level":"info","ts":1585065138.9021251,"logger":"fallback-logger","caller":"git/git.go:102","msg":"Successfully cloned https://github.com/redhat-scholars/tekton-tutorial @ master in path /workspace/source"}
 [git-source-git-source-rdr2k] {"level":"warn","ts":1585065138.902316,"logger":"fallback-logger","caller":"git/git.go:149","msg":"Unexpected error: creating symlink: symlink /tekton/home/.ssh /root/.ssh: file exists"}
 [git-source-git-source-rdr2k] {"level":"info","ts":1585065138.9946759,"logger":"fallback-logger","caller":"git/git.go:130","msg":"Successfully initialized and updated submodules in path /workspace/source"}
 
@@ -982,7 +1034,7 @@ tkn clustertask start echoer --showlog</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>The task <code>build-app</code> is used to build the <a href="https://github.com/redhat-developer-demos/tekton-tutorial/tree/master/apps/greeter/java/quarkus">Java application</a> that is part of the tutorial. As a step one(<code>build-sources</code>) the application will be built using <a href="https://apache.maven.org">Apache Maven</a>, then the step two (<code>build-image</code>) the application artifacts a <strong>jar</strong> in this case will be used to built the linux container image using <a href="https://buildah.io">buildah</a>, the <a href="https://github.com/redhat-developer-demos/tekton-tutorial/tree/master/apps/greeter/java/quarkus/Dockerfile.jvm">Dockerfile</a> in the sources will be used as base to build the linux container image and as part of the last step(<code>build-push</code>) the built linux container image will be pushed to the container registry.</p>
+<p>The task <code>build-app</code> is used to build the <a href="https://github.com/redhat-scholars/tekton-tutorial/tree/master/apps/greeter/java/quarkus">Java application</a> that is part of the tutorial. As a step one(<code>build-sources</code>) the application will be built using <a href="https://apache.maven.org">Apache Maven</a>, then the step two (<code>build-image</code>) the application artifacts a <strong>jar</strong> in this case will be used to built the linux container image using <a href="https://buildah.io">buildah</a>, the <a href="https://github.com/redhat-scholars/tekton-tutorial/tree/master/apps/greeter/java/quarkus/Dockerfile.jvm">Dockerfile</a> in the sources will be used as base to build the linux container image and as part of the last step(<code>build-push</code>) the built linux container image will be pushed to the container registry.</p>
 </div>
 <div class="paragraph">
 <p>The following section explains the three Task steps. The <a href="#tekton-task-deploy">Deploy a task</a> will finally deploy all these three steps together as one single <code>build-app</code> task.</p>
@@ -990,7 +1042,7 @@ tkn clustertask start echoer --showlog</code></pre>
 <div class="sect2">
 <h3 id="task-parameters"><a class="anchor" href="#task-parameters"></a>Step :: Task Inputs and Outputs</h3>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">task inputs and outputs</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">task inputs and outputs</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">inputs:
     resources: <i class="conum" data-value="1"></i><b>(1)</b>
@@ -1062,7 +1114,7 @@ outputs:
 <div class="sect2">
 <h3 id="build-sources"><a class="anchor" href="#build-sources"></a>Step 1 :: Build Application Sources</h3>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L32-L43" target="_blank" rel="noopener">step-build-sources</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L32-L43" target="_blank" rel="noopener">step-build-sources</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- name: build-sources
   image: docker.io/maven:3.6.3-jdk-8-slim
@@ -1102,7 +1154,7 @@ outputs:
 <div class="sect2">
 <h3 id="build-linux-image"><a class="anchor" href="#build-linux-image"></a>Step 2 :: Build Application Linux Container Image</h3>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L44-L62" target="_blank" rel="noopener">step-build-image</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L44-L62" target="_blank" rel="noopener">step-build-image</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- name: build-image
   image: quay.io/buildah/stable
@@ -1140,7 +1192,7 @@ outputs:
 <div class="sect2">
 <h3 id="push-linux-image"><a class="anchor" href="#push-linux-image"></a>Step 3:: Push Application Linux Container Image</h3>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L63-L78" target="_blank" rel="noopener">step-build-image</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L63-L78" target="_blank" rel="noopener">step-build-image</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- name: push-image
   image: quay.io/buildah/stable
@@ -1163,7 +1215,7 @@ outputs:
 <p>Having see the three individual steps of the <code>build-app</code> task, the following snippet shows all three chained together:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">build-app-task.yaml</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">build-app-task.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: Task
@@ -1274,7 +1326,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n tektontutorial -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml">build-app-task.yaml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n tektontutorial -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml">build-app-task.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">

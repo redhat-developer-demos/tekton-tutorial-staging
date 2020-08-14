@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Triggers :: Tekton Tutorial(Staging)</title>
-    <link rel="canonical" href="https://redhat-developer-docs.github.io/tekton-tutorial/tekton-tutorial/triggers.html">
+    <link rel="canonical" href="https://redhat-scholars.github.io/tekton-tutorial-staging/tekton-tutorial/triggers.html">
     <link rel="prev" href="private_reg_repos.html">
+    <link rel="next" href="openshift/index.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -14,7 +15,7 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
-      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-developer-docs.github.io/tekton-tutorial">Tekton Tutorial(Staging)</a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="https://redhat-scholars.github.io/tekton-tutorial-staging">Tekton Tutorial(Staging)</a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
         <span></span>
@@ -325,6 +326,58 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/index.html">OpenShift Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html">Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-create-project">Create Project</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#required-tasks">Required Cluster Tasks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-update-cluster-tasks">Update Cluster Tasks</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-deploy-app-from-git">Deploy Application from GitHub</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-create-java-ksvc-pipeline-tpl">Pipeline Template for Java and Knative Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#openshift-pipelines-prep-app-deploy">Prepare Application Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-create-ksvc-java-app">Deploy Application with Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-view-pipelines">View Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-watch-pipelines">Watch Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-view-app">Application Topology</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-pipeline-points">Points to Ponder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openshift/cloud_native_triggers.html">Triggers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -341,7 +394,7 @@
     <li><a href="triggers.html">Triggers</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/edit/master/documentation/modules/ROOT/pages/triggers.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/tekton-tutorial/edit/master/documentation/modules/ROOT/pages/triggers.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
@@ -473,7 +526,7 @@ kubectl config set-context --current --namespace triggers-demo</code></pre>
   -f <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/maven/0.1/maven.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/maven/0.1/maven.yaml</a> \
   -f <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/buildah/0.1/buildah.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/buildah/0.1/buildah.yaml</a> \
   -f <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/kn/0.1/kn.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/kn/0.1/kn.yaml</a> \
-  -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/workspaces/list-directory-task.yaml">$TUTORIAL_HOME/workspaces/list-directory-task.yaml</a></code></pre>
+  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/list-directory-task.yaml">$TUTORIAL_HOME/workspaces/list-directory-task.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -497,6 +550,9 @@ list-directory     Simple directory li...   11 hours ago
 maven              This Task can be us...   11 hours ago</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>tag::ws-deploy-nexus[]</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="ws-deploy-nexus"><a class="anchor" href="#ws-deploy-nexus"></a>Deploy Nexus</h3>
@@ -506,7 +562,7 @@ maven              This Task can be us...   11 hours ago</code></pre>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo \
-  -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/install/utils/nexus.yaml" target="_blank" rel="noopener">$TUTORIAL_HOME/install/utils/nexus.yaml</a></code></pre>
+  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/install/utils/nexus.yaml" target="_blank" rel="noopener">$TUTORIAL_HOME/install/utils/nexus.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -537,23 +593,19 @@ service/nexus        NodePort    10.100.205.22   &lt;none&gt;        8081:31743/
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$(minikube service nexus -n triggers-demo)</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
+<div class="admonitionblock note optional">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-note" title="OPTIONAL"></i>
 </td>
 <td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>OpenShift users can use routes to expose the service</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>In OpenShift,we can use routes to expose the service if we need to access it from outside,by:</p>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
-<pre>oc expose svc -n {chapter-namespace} nexus</pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl expose svc -n triggers-demo nexus</code></pre>
 </div>
 </div>
 </td>
@@ -569,7 +621,12 @@ service/nexus        NodePort    10.100.205.22   &lt;none&gt;        8081:31743/
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create -n triggers-demo cm maven-settings \
-  --from-file=settings.xml=<a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/workspaces/maven-settings.xml" target="_blank" rel="noopener">$TUTORIAL_HOME/workspaces/maven-settings.xml</a></code></pre>
+  --from-file=settings.xml=<a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/maven-settings.xml" target="_blank" rel="noopener">$TUTORIAL_HOME/workspaces/maven-settings.xml</a></code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">configmap/maven-settings created</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -582,7 +639,13 @@ service/nexus        NodePort    10.100.205.22   &lt;none&gt;        8081:31743/
 </div>
 </div>
 <div class="paragraph">
-<p>The output of the above command should be as same as settings.xml listing above.</p>
+<p>The output of the above command should be same as in <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/maven-settings.xml" target="_blank" rel="noopener">maven-settings.xml</a>.</p>
+</div>
+<div class="paragraph">
+<p>end::ws-deploy-nexus[]</p>
+</div>
+<div class="paragraph">
+<p>tag::ws-deploy-knative[]</p>
 </div>
 <div class="paragraph">
 <p>Before we create our pipeline ensure that the kubernetes cluster has a default storage class defined:</p>
@@ -620,7 +683,7 @@ Do it only once per cluster
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$TUTORIAL_HOME/bin/<a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/bin/enable_knative.sh" target="_blank" rel="noopener">enable_knative.sh</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$TUTORIAL_HOME/bin/<a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/bin/enable_knative.sh" target="_blank" rel="noopener">enable_knative.sh</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -634,6 +697,12 @@ Do it only once per cluster
 </div>
 </div>
 </div>
+<div class="paragraph">
+<p>end::ws-deploy-knative[]</p>
+</div>
+<div class="paragraph">
+<p>tag::ws-create-pvc[]</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="ws-check-sc"><a class="anchor" href="#ws-check-sc"></a>Check Default Storage Class</h3>
@@ -642,6 +711,19 @@ Do it only once per cluster
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get sc</code></pre>
 </div>
 </div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset2_kubernetes"></a>Kubernetes</p>
+</li>
+<li>
+<p><a id="tabset2_openshift"></a>OpenShift</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset2_kubernetes">
 <div class="paragraph">
 <p>In minkube cluster it should show an output like:</p>
 </div>
@@ -649,6 +731,20 @@ Do it only once per cluster
 <div class="content">
 <pre class="highlightjs highlight"><code>NAME                 PROVISIONER                RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
 standard (<mark>default</mark>)   k8s.io/minikube-hostpath   Delete          Immediate           false                  9h</code></pre>
+</div>
+</div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset2_openshift">
+<div class="paragraph">
+<p>An example default storage class in Google Cloud:</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                 PROVISIONER            RECLAIMPOLICY   VOLUMEBINDINGMODE      ALLOWVOLUMEEXPANSION   AGE
+standard (default)   kubernetes.io/gce-pd   Delete          WaitForFirstConsumer   true                   2d3h</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -664,7 +760,7 @@ standard (<mark>default</mark>)   k8s.io/minikube-hostpath   Delete          Imm
 <p>If you dont have one please check <a href="https://kubernetes.io/docs/concepts/storage/storage-classes/">Kubernetes Docs</a> on how to have one configured.</p>
 </li>
 <li>
-<p>In OpenShift cluster the default storage class varies based on the underlying cloud platform. Refer to <a href="https://docs.openshift.com/container-platform/4.5/storage/dynamic-provisioning.html">documentation</a> to know more.</p>
+<p>In OpenShift cluster the default storage class varies based on the underlying cloud platform. Refer to <a href="https://docs.openshift.com/container-platform/4.5/storage/dynamic-provisioning.html">OpenShift Documentation</a> to know more.</p>
 </li>
 </ul>
 </div>
@@ -680,8 +776,11 @@ standard (<mark>default</mark>)   k8s.io/minikube-hostpath   Delete          Imm
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/workspaces/sources-pvc.yaml" target="_blank" rel="noopener">$TUTORIAL_HOME/workspaces/sources-pvc.yaml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/sources-pvc.yaml" target="_blank" rel="noopener">$TUTORIAL_HOME/workspaces/sources-pvc.yaml</a></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>end::ws-create-pvc[]</p>
 </div>
 </div>
 <div class="sect2">
@@ -692,7 +791,7 @@ standard (<mark>default</mark>)   k8s.io/minikube-hostpath   Delete          Imm
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo \
-  -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/workspaces/helloworld-app-deploy.yaml" target="_blank" rel="noopener">$TUTORIAL_HOME/workspaces/helloworld-app-deploy.yaml</a></code></pre>
+  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/helloworld-app-deploy.yaml" target="_blank" rel="noopener">$TUTORIAL_HOME/workspaces/helloworld-app-deploy.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -731,7 +830,7 @@ helloworld-app-deploy   1 minute ago   ---        ---       ---        ---</code
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yq w <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/install/git/gogs-ingress.yaml">$TUTORIAL_HOME/install/git/gogs-ingress.yaml</a> \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yq w <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/install/git/gogs-ingress.yaml">$TUTORIAL_HOME/install/git/gogs-ingress.yaml</a> \
   spec.virtualhost.fqdn $GOGS_HOSTNAME |\
   kubectl apply -n triggers-demo -f -</code></pre>
 </div>
@@ -741,14 +840,14 @@ helloworld-app-deploy   1 minute ago   ---        ---       ---        ---</code
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed "s/@GOGS_HOSTNAME@/$GOGS_HOSTNAME/g" <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/install/git/app.ini.template">$TUTORIAL_HOME/install/git/app.ini.template</a> \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">sed "s/@GOGS_HOSTNAME@/$GOGS_HOSTNAME/g" <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/install/git/app.ini.template">$TUTORIAL_HOME/install/git/app.ini.template</a> \
   | tee $TUTORIAL_HOME/install/git/app.ini</code></pre>
 </div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo \
-  -k <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/install/git">$TUTORIAL_HOME/install/git/</a></code></pre>
+  -k <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/install/git">$TUTORIAL_HOME/install/git/</a></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -822,7 +921,7 @@ service/gogs-postgresql   ClusterIP   10.105.150.118   &lt;none&gt;        5432/
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -k <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/triggers/rbac">$TUTORIAL_HOME/triggers/rbac</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -k <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/triggers/rbac">$TUTORIAL_HOME/triggers/rbac</a></code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
@@ -862,7 +961,7 @@ In OpenShift you might no need the <strong>pipeline</strong> SA, as the OpenShif
 <p>A Git user, for the demo we will create user called <strong>gogs</strong> with password <strong>gogs</strong></p>
 </li>
 <li>
-<p>A Git Repository named <code>tekton-helloworld</code>, we will use <a href="https://github.com/redhat-developer-demos/tekton-helloworld" class="bare">https://github.com/redhat-developer-demos/tekton-helloworld</a></p>
+<p>A Git Repository named <code>tekton-helloworld</code>, we will use <a href="https://github.com/redhat-scholars/tekton-helloworld" class="bare">https://github.com/redhat-scholars/tekton-helloworld</a></p>
 </li>
 </ul>
 </div>
@@ -872,7 +971,7 @@ In OpenShift you might no need the <strong>pipeline</strong> SA, as the OpenShif
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create -n triggers-demo \
-  -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/triggers/gogs-init-taskrun.yaml" target="_blank" rel="noopener">gogs-init-taskrun.yaml</a></code></pre>
+  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/triggers/gogs-init-taskrun.yaml" target="_blank" rel="noopener">gogs-init-taskrun.yaml</a></code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
@@ -914,7 +1013,7 @@ In OpenShift you might no need the <strong>pipeline</strong> SA, as the OpenShif
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create -n triggers-demo \
-  -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/triggers/helloworld-trigger-template.yaml" target="_blank" rel="noopener">helloworld-trigger-template.yaml</a></code></pre>
+  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/triggers/helloworld-trigger-template.yaml" target="_blank" rel="noopener">helloworld-trigger-template.yaml</a></code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
@@ -1054,7 +1153,7 @@ tekton-helloworld-trigger-template   1 minute ago</code></pre>
 <div class="sect2">
 <h3 id="tkn-triggers-create-bindings"><a class="anchor" href="#tkn-triggers-create-bindings"></a>Create Trigger Bindings</h3>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/triggers/gogs-triggerbindings.yaml" target="_blank" rel="noopener">gogs-triggerbindings.yaml</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/triggers/gogs-triggerbindings.yaml" target="_blank" rel="noopener">gogs-triggerbindings.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
 apiVersion: triggers.tekton.dev/v1alpha1
@@ -1109,7 +1208,7 @@ gogs-triggerbinding   7 seconds ago</code></pre>
 <h3 id="tkn-triggers-create-eventlistener"><a class="anchor" href="#tkn-triggers-create-eventlistener"></a>Create Event Listener</h3>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/triggers/gogs-eventlistener.yaml">gogs-eventlistener.yaml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/triggers/gogs-eventlistener.yaml">gogs-eventlistener.yaml</a></code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
@@ -1158,15 +1257,15 @@ gogs-webhook   4 seconds ago</code></pre>
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset2_minikube"></a>Minikube</p>
+<p><a id="tabset3_minikube"></a>Minikube</p>
 </li>
 <li>
-<p><a id="tabset2_openshift"></a>OpenShift</p>
+<p><a id="tabset3_openshift"></a>OpenShift</p>
 </li>
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset2_minikube">
+<div class="tab-pane" aria-labelledby="tabset3_minikube">
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export EL_WEBHOOK_URL="$(kubectl get svc -n triggers-demo el-gogs-webhook -o yaml \
@@ -1177,7 +1276,7 @@ export EL_WEBHOOK_LISTENER_PORT="$(kubectl get svc -n triggers-demo el-gogs-webh
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yq w <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/triggers/eventlistener-ingress.yaml">eventlistener-ingress.yaml</a> \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yq w <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/triggers/eventlistener-ingress.yaml">eventlistener-ingress.yaml</a> \
   spec.virtualhost.fqdn $EL_WEBHOOK_URL \
   | yq w - 'spec.routes[0].services[0].name' el-gogs-webhook \
   | yq w - 'spec.routes[0].services[0].port' $EL_WEBHOOK_LISTENER_PORT \
@@ -1217,7 +1316,7 @@ spec:
 </div>
 </div>
 </div>
-<div class="tab-pane" aria-labelledby="tabset2_openshift">
+<div class="tab-pane" aria-labelledby="tabset3_openshift">
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc expose svc -n triggers-demo el-gogs-webhook --targetPort=http-listener</code></pre>
@@ -1238,7 +1337,7 @@ spec:
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create -n triggers-demo \
-  -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/triggers/gogs-webhook-taskrun.yaml" target="_blank" rel="noopener">gogs-webhook-taskrun.yaml</a></code></pre>
+  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/triggers/gogs-webhook-taskrun.yaml" target="_blank" rel="noopener">gogs-webhook-taskrun.yaml</a></code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
@@ -1418,6 +1517,7 @@ Use the username <code>gogs</code> and password <code>gogs</code> when prompted 
 </div>
 <nav class="pagination">
   <span class="prev"><a href="private_reg_repos.html">Private Registries and Repositories</a></span>
+  <span class="next"><a href="openshift/index.html">OpenShift Pipelines</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
