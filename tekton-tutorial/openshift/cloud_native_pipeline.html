@@ -465,7 +465,7 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Git clone using <code>git-clone</code> task, the <a href="https://github.com/redhat-scholars/tekton-helloworld" class="bare">https://github.com/redhat-scholars/tekton-helloworld</a> repository</p>
+<p>Git clone using <code>git-clone</code> task, the <a href="https://github.com/redhat-scholars/tekton-greeter" class="bare">https://github.com/redhat-scholars/tekton-greeter</a> repository</p>
 </li>
 <li>
 <p>Will use maven task, maven task require two workspaces one for source and other for maven-settings</p>
@@ -667,7 +667,7 @@ tkn                                      13 hours ago</code></pre>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text"><a href="https://github.com/redhat-scholars/tekton-tutorial" class="bare">https://github.com/redhat-scholars/tekton-tutorial</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">https://github.com/redhat-scholars/tekton-tutorial-greeter</code></pre>
 </div>
 </div>
 <div class="imageblock">
@@ -676,30 +676,13 @@ tkn                                      13 hours ago</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>By default the builder image will choosen <code>NodeJs</code> automatically based on the GitHub repository content as shown:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/odc_default_builder.png" alt="odc default builder">
-</div>
-</div>
-<div class="paragraph">
-<p>But for the exercises of this chapter, we will build and deploy a Pipeline that will build a <strong>Java</strong> application. We can use Java applications under the folder <a href="https://github.com/redhat-scholars/tekton-tutorial/tree/master/apps">apps</a>. Let us change the builder to be Java, by clicking the <b class="button">Java</b> from the list of <strong>Builder</strong>:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/odc_java_builder.png" alt="odc java builder">
-</div>
-<div class="title">Figure 4. Use Java Builder</div>
-</div>
-<div class="paragraph">
-<p>Leave the Builder Image Version to be <strong>11</strong> and update the <strong>Name</strong> to be <code>greeter</code>:</p>
+<p>By default the builder image will choosen to be <code>Java</code>, based on the GitHub repository content. Leave the Builder Image Version to be <strong>11</strong> and update the <strong>Name</strong> to be <code>greeter</code>:</p>
 </div>
 <div id="odc-name-the-app" class="imageblock">
 <div class="content">
 <img src="_images/ocp_dc_name_it.png" alt="ocp dc name it">
 </div>
-<div class="title">Figure 5. Greeter Application</div>
+<div class="title">Figure 4. Greeter Application</div>
 </div>
 <div class="paragraph">
 <p>On the resources you can choose either <em>Deployment</em> or <em>Knative Service</em>. Try choosing <em>Deployment</em>, and should see an option to <b class="menuref">Add Pipeline</b> with default Pipeline template avaiable for this runtime <strong>Java</strong> and resource type <strong>Deployment</strong>, as shown:</p>
@@ -708,7 +691,7 @@ tkn                                      13 hours ago</code></pre>
 <div class="content">
 <img src="_images/ocp_dc_deploy_add_pipeline.png" alt="ocp dc deploy add pipeline">
 </div>
-<div class="title">Figure 6. Java Deployment Pipeline</div>
+<div class="title">Figure 5. Java Deployment Pipeline</div>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -729,7 +712,7 @@ You Show/Hide Pipeline visualization by toggling <em>Show[Hide] Pipeline visuali
 <div class="content">
 <img src="_images/ocp_dc_ksvc_no_pipeline.png" alt="ocp dc ksvc no pipeline">
 </div>
-<div class="title">Figure 7. Java Knative Service</div>
+<div class="title">Figure 6. Java Knative Service</div>
 </div>
 <div class="paragraph">
 <p>Hit <b class="button">Cancel</b> button to cancel the deployment. We will do a fresh deployment once we deploy the Pipeline template for runtime Java and resource type Knative Service.</p>
@@ -756,22 +739,22 @@ metadata:
     pipeline.openshift.io/type: knative <i class="conum" data-value="3"></i><b>(3)</b>
 spec:
   description: &gt;-
-    The Pipline to buld and deploy the Hello World Java App &lt;a href="https://github.com/redhat-scholars/tekton-tutorial" class="bare"&gt;https://github.com/redhat-scholars/tekton-tutorial&lt;/a&gt; as Knative Service.
+    The Pipline to buld and deploy the Hello World Java App &lt;a href="https://github.com/redhat-scholars/tekton-tutorial-greeter" class="bare"&gt;https://github.com/redhat-scholars/tekton-tutorial-greeter&lt;/a&gt; as Knative Service.
   params:
     - name: IMAGE_NAME
       description: &gt;-
-        The fully qualified image name e.g example.com/tekton-tutorial/helloworld
-      default: image-registry.openshift-image-registry.svc:5000/tektontutorial/helloworld
-    - name: CONTEXT_DIR
+        The fully qualified image name e.g example.com/tekton-tutorial/greeter
+      default: image-registry.openshift-image-registry.svc:5000/tektontutorial/greeter
+    - name: APP_PROFILE
       description: &gt;-
-        The context directory within source from where to build the sources. In this example there are to options:
-          * apps/greeter/java/quarkus
-          * apps/greeter/java/springboot
+        The application profile to use for building the application. In this example it should be either:
+          * quarkus
+          * springboot
     - name: APP_NAME <i class="conum" data-value="4"></i><b>(4)</b>
       description: The Knative Service name
     - name: GITHUB_REPO_URL
       description: The GitHub Repo of the Java Application
-      default: &lt;a href="https://github.com/redhat-scholars/tekton-tutorial" class="bare"&gt;https://github.com/redhat-scholars/tekton-tutorial&lt;/a&gt;
+      default: &lt;a href="https://github.com/redhat-scholars/tekton-tutorial-greeter" class="bare"&gt;https://github.com/redhat-scholars/tekton-tutorial-greeter&lt;/a&gt;
     - name: GITHUB_REPO_REVISION
       description: The GitHub revision to use
       default: master
@@ -804,11 +787,11 @@ spec:
       params:
         - name: GOALS
           value:
+            - '-pl'
+            - $(params.APP_PROFILE)
             - -B
             - 'clean'
             - 'test'
-            - '-f'
-            - '$(params.CONTEXT_DIR)/pom.xml'
       workspaces:
         - name: maven-settings
           workspace: maven-settings
@@ -823,12 +806,12 @@ spec:
       params:
         - name: GOALS
           value:
+            - '-pl'
+            - $(params.APP_PROFILE)
             - -B
             - '-DskipTests'
             - 'clean'
             - 'package'
-            - '-f'
-            - '$(params.CONTEXT_DIR)/pom.xml'
       workspaces:
         - name: maven-settings
           workspace: maven-settings
@@ -842,7 +825,7 @@ spec:
         - build-java-app
       params:
         - name: CONTEXT
-          value: '$(params.CONTEXT_DIR)'
+          value: '$(params.APP_PROFILE)'
         - name: IMAGE
           value: '$(params.IMAGE_NAME)'
         # since pushing to internal registry we skip TLS verify
@@ -909,7 +892,7 @@ spec:
 <div class="content">
 <img src="_images/ocp_dc_add_kn_pipeline.png" alt="ocp dc add kn pipeline">
 </div>
-<div class="title">Figure 8. Java Knative Service Pipeline</div>
+<div class="title">Figure 7. Java Knative Service Pipeline</div>
 </div>
 </div>
 <div class="sect2">
@@ -1152,7 +1135,7 @@ standard (default)   kubernetes.io/gce-pd   Delete          WaitForFirstConsumer
 <div class="content">
 <img src="_images/ocp_dc_check_add_kn_pipeline.png" alt="ocp dc check add kn pipeline">
 </div>
-<div class="title">Figure 9. Add Pipeline</div>
+<div class="title">Figure 8. Add Pipeline</div>
 </div>
 <div class="paragraph">
 <p>Then click the <b class="button">Create</b> button, to create the "greeter" application with pipeline enabled:</p>
@@ -1161,7 +1144,7 @@ standard (default)   kubernetes.io/gce-pd   Delete          WaitForFirstConsumer
 <div class="content">
 <img src="_images/odc_greeter_app_created.png" alt="odc greeter app created">
 </div>
-<div class="title">Figure 10. Greeter Application</div>
+<div class="title">Figure 9. Greeter Application</div>
 </div>
 <div class="paragraph">
 <p>As noticed in the above figure the application is yet to be deployed, as no pipelines have run.</p>
@@ -1176,7 +1159,7 @@ standard (default)   kubernetes.io/gce-pd   Delete          WaitForFirstConsumer
 <div class="content">
 <img src="_images/odc_view_greeter_pipeline.png" alt="odc view greeter pipeline">
 </div>
-<div class="title">Figure 11. greeter Pipeline</div>
+<div class="title">Figure 10. greeter Pipeline</div>
 </div>
 <div class="paragraph">
 <p>The Pipeline name is same as the application name <strong>greeter</strong>, click the greeter Pipeline link, to see more details such as:</p>
@@ -1198,7 +1181,7 @@ standard (default)   kubernetes.io/gce-pd   Delete          WaitForFirstConsumer
 <div class="content">
 <img src="_images/odc_greeter_pipeline_details.png" alt="odc greeter pipeline details">
 </div>
-<div class="title">Figure 12. greeter Pipeline details</div>
+<div class="title">Figure 11. greeter Pipeline details</div>
 </div>
 </div>
 </div>
@@ -1213,7 +1196,7 @@ standard (default)   kubernetes.io/gce-pd   Delete          WaitForFirstConsumer
 <div class="content">
 <img src="_images/odc_greeter_pipeline_start.png" alt="odc greeter pipeline start">
 </div>
-<div class="title">Figure 13. Start greeter Pipeline</div>
+<div class="title">Figure 12. Start greeter Pipeline</div>
 </div>
 <div class="paragraph">
 <p>The <strong>Start</strong> pipeline will request the details such as Parameters and workspaces to be set for the Pipeline run, provide the details as:</p>
@@ -1237,16 +1220,16 @@ Update the highlighted path to match your namespace, in case you are not using p
 </table>
 </div>
 <div class="listingblock console-input">
-<div class="title">CONTEXT_DIR</div>
+<div class="title">APP_PROFILE</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">apps/greeter/java/springboot <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">quarkus <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>You can also set it to be <code>apps/greeter/java/quarkus</code></td>
+<td>You can also set it to be <code>springboot</code></td>
 </tr>
 </table>
 </div>
@@ -1265,13 +1248,13 @@ Update the highlighted path to match your namespace, in case you are not using p
 </table>
 </div>
 <div class="paragraph">
-<p>Leave the <strong>GITHUB_REPO_URL</strong> and <strong>GITHUB_REPO_REVISION</strong> to be defaults</p>
+<p>Leave the <strong>GITHUB_REPO_URL</strong> and <strong>GITHUB_REPO_REVISION</strong> to be defaults as, <strong><a href="https://github.com/redhat-scholars/tekton-tutorial-greeter" class="bare">https://github.com/redhat-scholars/tekton-tutorial-greeter</a></strong> and <strong>staging</strong> respectively.</p>
 </div>
 <div class="paragraph">
-<p>Set the <span class="menuseq"><b class="menu">Workspace</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Source</b></span> to be of type <strong>PVC</strong> and use <strong>tekton-tutorial-sources</strong> as PVC.</p>
+<p>Choose the <span class="menuseq"><b class="menu">Workspace</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Source</b></span> to be of type <strong>PVC</strong> and use <strong>tekton-tutorial-sources</strong> as the value for PVC.</p>
 </div>
 <div class="paragraph">
-<p>Set the <span class="menuseq"><b class="menu">Workspace</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">maven-settings</b></span> to be of type <strong>ConfigMap</strong> and use <strong>maven-settings</strong> ConfigMap.</p>
+<p>Choose the <span class="menuseq"><b class="menu">Workspace</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">maven-settings</b></span> to be of type <strong>ConfigMap</strong> and use <strong>maven-settings</strong> as the value for ConfigMap.</p>
 </div>
 <div class="paragraph">
 <p>The completed parameters should look like:</p>
@@ -1280,7 +1263,7 @@ Update the highlighted path to match your namespace, in case you are not using p
 <div class="content">
 <img src="_images/odc_greeter_pipeline_params.png" alt="odc greeter pipeline params">
 </div>
-<div class="title">Figure 14. greeter Pipeline parameters</div>
+<div class="title">Figure 13. greeter Pipeline parameters</div>
 </div>
 <div class="paragraph">
 <p>Click the button <b class="button">Start</b> to kick start the pipeline. The Pipeline run be automatically show as in the following screenshot:</p>
@@ -1289,7 +1272,7 @@ Update the highlighted path to match your namespace, in case you are not using p
 <div class="content">
 <img src="_images/odc_greeter_pipeline_running.png" alt="odc greeter pipeline running">
 </div>
-<div class="title">Figure 15. greeter Pipeline run</div>
+<div class="title">Figure 14. greeter Pipeline run</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1309,13 +1292,13 @@ It will take few minutes for the pipeline to be running and complete. You can wa
 <h2 id="odc-watch-pipelines"><a class="anchor" href="#odc-watch-pipelines"></a>Watch Pipelines</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>You can watch the pipeline from sidebar menu:Pipelines, and selecting <strong>greeter</strong> from the list:</p>
+<p>You can watch the pipeline from sidebar <b class="menuref">Pipelines</b>, and selecting <strong>greeter</strong> from the list:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/odc_greeter_pipeline_running_from_list.png" alt="odc greeter pipeline running from list">
 </div>
-<div class="title">Figure 16. Pipelines list</div>
+<div class="title">Figure 15. Pipelines list</div>
 </div>
 </div>
 </div>
@@ -1329,7 +1312,7 @@ It will take few minutes for the pipeline to be running and complete. You can wa
 <div class="content">
 <img src="_images/odc_greeter_topology_view.png" alt="odc greeter topology view">
 </div>
-<div class="title">Figure 17. greeter Knative Service Topology</div>
+<div class="title">Figure 16. greeter Knative Service Topology</div>
 </div>
 <div class="paragraph">
 <p>A successful pipeline should have the Java Knative Service deployed and running as shown:</p>
@@ -1340,7 +1323,7 @@ It will take few minutes for the pipeline to be running and complete. You can wa
 </div>
 </div>
 <div class="paragraph">
-<p>Click on the URL in the <strong>Routes</strong>, to access the application and see the response, which should be simple <strong>hello</strong> text.</p>
+<p>Click on the URL in the <strong>Routes</strong>, to access the application and see the response <strong>Meeow!! from Tekton 😺🚀</strong>.</p>
 </div>
 </div>
 </div>

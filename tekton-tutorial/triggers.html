@@ -461,7 +461,7 @@ In OpenShfit, the OpenShift pipelines operator installs Tekton Pipelines and Tek
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -f <a href="https://storage.googleapis.com/tekton-releases/triggers/previous/v0.4.0/release.yaml" class="bare">https://storage.googleapis.com/tekton-releases/triggers/previous/v0.4.0/release.yaml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -f <a href="https://storage.googleapis.com/tekton-releases/triggers/previous/{triggers-version}/release.yaml" class="bare">https://storage.googleapis.com/tekton-releases/triggers/previous/{triggers-version}/release.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -489,8 +489,6 @@ tekton-pipelines-webhook-75bc7666c-9crwq       1/1     Running   1          3d3h
 <div class="sect1">
 <h2 id="tkn-triggers-prepare"><a class="anchor" href="#tkn-triggers-prepare"></a>Prepare namespace</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="ws-tasks-deploy"><a class="anchor" href="#ws-tasks-deploy"></a>Deploy Tasks from Catalog</h3>
 <div class="paragraph">
 <p>All exercises of this chapter will be done a namesapace <code>triggers-demo</code>, lets create and switch to the <code>triggers-demo</code> namespace.</p>
 </div>
@@ -548,10 +546,6 @@ git-clone          These Tasks are Git...   11 hours ago
 kn                 This Task performs ...   9 minutes ago
 list-directory     Simple directory li...   11 hours ago
 maven              This Task can be us...   11 hours ago</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>tag::ws-deploy-nexus[]</p>
 </div>
 </div>
 <div class="sect2">
@@ -642,12 +636,6 @@ service/nexus        NodePort    10.100.205.22   &lt;none&gt;        8081:31743/
 <p>The output of the above command should be same as in <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/maven-settings.xml" target="_blank" rel="noopener">maven-settings.xml</a>.</p>
 </div>
 <div class="paragraph">
-<p>end::ws-deploy-nexus[]</p>
-</div>
-<div class="paragraph">
-<p>tag::ws-deploy-knative[]</p>
-</div>
-<div class="paragraph">
 <p>Before we create our pipeline ensure that the kubernetes cluster has a default storage class defined:</p>
 </div>
 </div>
@@ -696,12 +684,6 @@ Do it only once per cluster
 </div>
 </div>
 </div>
-</div>
-<div class="paragraph">
-<p>end::ws-deploy-knative[]</p>
-</div>
-<div class="paragraph">
-<p>tag::ws-create-pvc[]</p>
 </div>
 </div>
 <div class="sect2">
@@ -779,19 +761,16 @@ standard (default)   kubernetes.io/gce-pd   Delete          WaitForFirstConsumer
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/sources-pvc.yaml" target="_blank" rel="noopener">$TUTORIAL_HOME/workspaces/sources-pvc.yaml</a></code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>end::ws-create-pvc[]</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="tkn-triggers-create-pipeline"><a class="anchor" href="#tkn-triggers-create-pipeline"></a>Create Pipeline</h3>
 <div class="paragraph">
-<p>As part of the Trigger exercise we will be runing the helloworld-app-deploy pipeline, lets deploy the pipeline to be used later:</p>
+<p>As part of the Trigger exercise we will be runing the greeter-app-deploy pipeline, lets deploy the pipeline to be used later:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo \
-  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/helloworld-app-deploy.yaml" target="_blank" rel="noopener">$TUTORIAL_HOME/workspaces/helloworld-app-deploy.yaml</a></code></pre>
+  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/greeter-app-deploy.yaml" target="_blank" rel="noopener">$TUTORIAL_HOME/workspaces/greeter-app-deploy.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -805,7 +784,7 @@ standard (default)   kubernetes.io/gce-pd   Delete          WaitForFirstConsumer
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                    AGE            LAST RUN   STARTED   DURATION   STATUS
-helloworld-app-deploy   1 minute ago   ---        ---       ---        ---</code></pre>
+greeter-app-deploy   1 minute ago   ---        ---       ---        ---</code></pre>
 </div>
 </div>
 </div>
@@ -961,7 +940,7 @@ In OpenShift you might no need the <strong>pipeline</strong> SA, as the OpenShif
 <p>A Git user, for the demo we will create user called <strong>gogs</strong> with password <strong>gogs</strong></p>
 </li>
 <li>
-<p>A Git Repository named <code>tekton-helloworld</code>, we will use <a href="https://github.com/redhat-scholars/tekton-helloworld" class="bare">https://github.com/redhat-scholars/tekton-helloworld</a></p>
+<p>A Git Repository named <code>tekton-greeter</code>, we will use <a href="https://github.com/redhat-scholars/tekton-tutorial-greeter" class="bare">https://github.com/redhat-scholars/tekton-tutorial-greeter</a></p>
 </li>
 </ul>
 </div>
@@ -993,8 +972,8 @@ In OpenShift you might no need the <strong>pipeline</strong> SA, as the OpenShif
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[init-gogs] Created admin user gogs:gogs
-[init-gogs] Created git repo tekton-helloworld
-[init-gogs] Repository Clone url http://gogs.192.168.64.5.nip.io/gogs/tekton-helloworld.git</code></pre>
+[init-gogs] Created git repo tekton-tutorial-greeter
+[init-gogs] Repository Clone url http://gogs.192.168.64.5.nip.io/gogs/https://github.com/redhat-scholars/tekton-tutorial-greeter.git</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1013,12 +992,12 @@ In OpenShift you might no need the <strong>pipeline</strong> SA, as the OpenShif
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create -n triggers-demo \
-  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/triggers/helloworld-trigger-template.yaml" target="_blank" rel="noopener">helloworld-trigger-template.yaml</a></code></pre>
+  -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/triggers/greeter-trigger-template.yaml" target="_blank" rel="noopener">greeter-trigger-template.yaml</a></code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">triggertemplate.triggers.tekton.dev/tekton-helloworld-trigger-template created</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">triggertemplate.triggers.tekton.dev/tekton-greeter-trigger-template created</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1035,7 +1014,7 @@ In OpenShift you might no need the <strong>pipeline</strong> SA, as the OpenShif
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                                 AGE
-tekton-helloworld-trigger-template   1 minute ago</code></pre>
+tekton-greeter-trigger-template   1 minute ago</code></pre>
 </div>
 </div>
 </div>
@@ -1057,12 +1036,12 @@ tekton-helloworld-trigger-template   1 minute ago</code></pre>
   "ref": "refs/heads/master",
   "before": "d84fc84f8d7a1da0b49140f644613168e4af3110",
   <mark>"after": "becd943814ef904215c0c6f301434ce8faf31c26",</mark>
-  "compare_url": "http://gogs.192.168.64.5.nip.io/gogs/tekton-helloworld/compare/d84fc84f8d7a1da0b49140f644613168e4af3110...becd943814ef904215c0c6f301434ce8faf31c26",
+  "compare_url": "http://gogs.192.168.64.5.nip.io/gogs/tekton-greeter/compare/d84fc84f8d7a1da0b49140f644613168e4af3110...becd943814ef904215c0c6f301434ce8faf31c26",
   "commits": [
     {
       "id": "becd943814ef904215c0c6f301434ce8faf31c26",
       "message": "First Test Trigger\n",
-      "url": "http://gogs.192.168.64.5.nip.io/gogs/tekton-helloworld/commit/becd943814ef904215c0c6f301434ce8faf31c26",
+      "url": "http://gogs.192.168.64.5.nip.io/gogs/tekton-greeter/commit/becd943814ef904215c0c6f301434ce8faf31c26",
       "author": {
         "name": "Kamesh Sampath",
         "email": "kamesh.sampath@hotmail.com",
@@ -1091,8 +1070,8 @@ tekton-helloworld-trigger-template   1 minute ago</code></pre>
       "avatar_url": "https://secure.gravatar.com/avatar/4d667b96bad9b51aafc728a20ebce918",
       "username": "gogs"
     },
-    "name": "tekton-helloworld",
-    "full_name": "gogs/tekton-helloworld",
+    "name": "tekton-greeter",
+    "full_name": "gogs/tekton-greeter",
     "description": "",
     "private": false,
     "fork": false,
@@ -1100,9 +1079,9 @@ tekton-helloworld-trigger-template   1 minute ago</code></pre>
     "empty": false,
     "mirror": false,
     "size": 323584,
-    "html_url": "http://gogs.192.168.64.5.nip.io/gogs/tekton-helloworld",
-    "ssh_url": "gogs@gogs.192.168.64.5.nip.io:gogs/tekton-helloworld.git",
-    <mark>"clone_url": "http://gogs.192.168.64.5.nip.io/gogs/tekton-helloworld.git",</mark>
+    "html_url": "http://gogs.192.168.64.5.nip.io/gogs/tekton-greeter",
+    "ssh_url": "gogs@gogs.192.168.64.5.nip.io:gogs/tekton-greeter.git",
+    <mark>"clone_url": "http://gogs.192.168.64.5.nip.io/gogs/tekton-greeter.git",</mark>
     "website": "",
     "stars_count": 0,
     "forks_count": 0,
@@ -1332,7 +1311,7 @@ spec:
 <h2 id="tkn-triggers-configure-webhook"><a class="anchor" href="#tkn-triggers-configure-webhook"></a>Configure Webhook</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>For the GitHub Triggers to work, we need to have the <a href="https://gogs.io/docs/features/webhook">Webhook</a> configured for the Git Repository <code>tekton-helloworld</code> to point to the <code>el-gogs-webhook-ingress</code>:</p>
+<p>For the GitHub Triggers to work, we need to have the <a href="https://gogs.io/docs/features/webhook">Webhook</a> configured for the Git Repository <code>tekton-greeter</code> to point to the <code>el-gogs-webhook-ingress</code>:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -1362,7 +1341,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>As you note now the <code>tekton-helloworld</code> Git repository in Gogs is configured with the webhook to send Git events to EventListener.</p>
+<p>As you note now the <code>tekton-greeter</code> Git repository in Gogs is configured with the webhook to send Git events to EventListener.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -1404,7 +1383,7 @@ spec:
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">...
-el-gogs-webhook-88bc89db-ld6jz event-listener {"level":"info","logger":"eventlistener","caller":"resources/create.go:93","msg":"Generating resource: kind: &amp;APIResource{Name:pipelineruns,Namespaced:true,Kind:PipelineRun,Verbs:[delete deletecollection get list patch create update watch],ShortNames:[pr prs],SingularName:pipelinerun,Categories:[tekton tekton-pipelines],Group:tekton.dev,Version:v1beta1,StorageVersionHash:4xDTCrDXyFg=,}, name: helloworld-app-","knative.dev/controller":"eventlistener"}
+el-gogs-webhook-88bc89db-ld6jz event-listener {"level":"info","logger":"eventlistener","caller":"resources/create.go:93","msg":"Generating resource: kind: &amp;APIResource{Name:pipelineruns,Namespaced:true,Kind:PipelineRun,Verbs:[delete deletecollection get list patch create update watch],ShortNames:[pr prs],SingularName:pipelinerun,Categories:[tekton tekton-pipelines],Group:tekton.dev,Version:v1beta1,StorageVersionHash:4xDTCrDXyFg=,}, name: greeter-app-","knative.dev/controller":"eventlistener"}
 el-gogs-webhook-88bc89db-ld6jz event-listener {"level":"info","logger":"eventlistener","caller":"resources/create.go:101","msg":"For event ID \"rrgcn\" creating resource tekton.dev/v1beta1, Resource=pipelineruns","knative.dev/controller":"eventlistener"}
 ...</code></pre>
 </div>
@@ -1413,28 +1392,56 @@ el-gogs-webhook-88bc89db-ld6jz event-listener {"level":"info","logger":"eventlis
 <div class="sect2">
 <h3 id="_clone_and_edit_the_source"><a class="anchor" href="#_clone_and_edit_the_source"></a>Clone and Edit the source</h3>
 <div class="paragraph">
-<p>Using your favorite IDE clone the repo <code>tekton-helloworld</code> from Gogs using the <a href="#tkn-triggers-init-repo">clone url</a>.</p>
+<p>Using your favorite IDE clone the repo <code>tekton-greeter</code> from Gogs using the <a href="#tkn-triggers-init-repo">clone url</a>.</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone &lt;your gogs tekton-helloworld clone url&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone &lt;your gogs tekton-greeter clone url&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Open the <code>tekton-hellworld</code> in your IDE and  edit the Java files:</p>
+<p>Open the <code>tekton-tutorial-greeter</code> in your IDE and edit the Java file:</p>
 </div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset4_quarkus"></a>Quarkus</p>
+</li>
+<li>
+<p><a id="tabset4_springboot"></a>SpringBoot</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset4_quarkus">
 <div class="ulist">
 <ul>
 <li>
-<p><code>src/main/java/com/redhat/developers/GreetingResource.java</code> to update the "Hello World!" to "😺 Tekton Rocks!"</p>
+<p><code>src/main/java/com/redhat/developers/GreetingResource.java</code> to update the "Meeow!! from Tekton 😺🚀" to "😺 Tekton Rocks!"</p>
 </li>
 <li>
 <p><code>src/test/java/com/redhat/developers/GreetingResourceTest.java</code> to match "😺 Tekton Rocks!".</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="tab-pane" aria-labelledby="tabset4_springboot">
+<div class="ulist">
+<ul>
+<li>
+<p><code>src/main/java/com/redhat/developer/demos/GreetingController.java</code> to update the "Meeow!! from Tekton 😺🚀" to "😺 Tekton Rocks!"</p>
+</li>
+<li>
+<p><code>src/test/java/com/redhat/developer/demos/GreetingControllerTest.java</code> to match "😺 Tekton Rocks!".</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
 <div class="paragraph">
-<p>Commit and push to see the 😺 Pipeline <code>helloworld-app-deploy</code> running 🚀.</p>
+<p>Commit and push to see the 😺 Pipeline <code>greeter-app-deploy</code> running 🚀.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1457,11 +1464,11 @@ Use the username <code>gogs</code> and password <code>gogs</code> when prompted 
 </div>
 </div>
 <div class="paragraph">
-<p>Once the Pipeline succeeds, verify the Knative Service <code>helloworld</code>:</p>
+<p>Once the Pipeline succeeds, verify the Knative Service <code>greeter</code>:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">http --body (kn service describe helloworld -o url)/hello</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">http --body (kn service describe greeter -o url)/hello</code></pre>
 </div>
 </div>
 <div class="paragraph">

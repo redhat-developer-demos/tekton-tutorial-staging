@@ -440,12 +440,6 @@
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">Install</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">Knative Client <code>kn</code> (&gt;=v0.16.0)</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install knative/client/kn</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/knative/client/releases/download/v0.16.0/kn-linux-amd64">Install</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/knative/client/releases/download/v0.16.0/kn-windows-amd64.exe">Install</a></p></td>
-</tr>
-<tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/wercker/stern">stern</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install stern</code></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/wercker/stern/releases/download/1.6.0/stern_linux_amd64">Download</a></p></td>
@@ -479,6 +473,24 @@
 <div class="paragraph">
 <p>Before we start setting up the environment, let&#8217;s clone the tutorial sources and set the <code>TUTORIAL_HOME</code> environment variable to point to the root directory of the tutorial:</p>
 </div>
+<div class="paragraph">
+<p>Before we start setting up the environment, let’s clone the tutorial sources and set the <code>TUTORIAL_HOME</code> environment variable to point to the root directory of the tutorial:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone <a href="https://github.com/redhat-scholars/tekton-tutorial" class="bare">https://github.com/redhat-scholars/tekton-tutorial</a> tekton-tutorial</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export TUTORIAL_HOME="$(pwd)/tekton-tutorial"</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd $TUTORIAL_HOME</code></pre>
+</div>
+</div>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -492,10 +504,10 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Tekton <code>v0.11.3</code></p>
+<p>Tekton <code>{tekton-version}</code></p>
 </li>
 <li>
-<p>Tekton Triggers <code>v0.4.0</code></p>
+<p>Tekton Triggers <code>{triggers-version}</code></p>
 </li>
 <li>
 <p>Minikube <code>v1.12.1+</code></p>
@@ -504,10 +516,10 @@
 <p>OpenShift <code>v4.5+</code></p>
 </li>
 <li>
-<p>Tekton CLI <code>0.11.0</code></p>
+<p>Tekton CLI <code>{tekton-cli-version}</code></p>
 </li>
 <li>
-<p>Knative Client(kn) <code>v0.16.0</code></p>
+<p>Knative Client(kn) <code>{kn-version}</code></p>
 </li>
 </ul>
 </div>
@@ -628,7 +640,7 @@
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply --filename \
-<a href="https://github.com/tektoncd/pipeline/releases/download/v0.11.3/release.yaml" class="bare">https://github.com/tektoncd/pipeline/releases/download/v0.11.3/release.yaml</a></code></pre>
+<a href="https://github.com/tektoncd/pipeline/releases/download/{tekton-version}/release.yaml" class="bare">https://github.com/tektoncd/pipeline/releases/download/{tekton-version}/release.yaml</a></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -675,13 +687,13 @@ tekton-pipelines-webhook-75bc7666c-9crwq       1/1     Running   85s</code></pre
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/tektoncd/cli/releases/download/v0.11.0/tkn_0.11.0_Darwin_x86_64.tar.gz">Download for macOS</a></p>
+<p><a href="https://github.com/tektoncd/cli/releases/download/v{tekton-cli-version}/tkn_{tekton-cli-version}_Darwin_x86_64.tar.gz">Download for macOS</a></p>
 </li>
 <li>
-<p><a href="https://github.com/tektoncd/cli/releases/download/v0.11.0/tkn_0.11.0_Linux_x86_64.tar.gz">Download for Linux</a></p>
+<p><a href="https://github.com/tektoncd/cli/releases/download/v{tekton-cli-version}/tkn_{tekton-cli-version}_Linux_x86_64.tar.gz">Download for Linux</a></p>
 </li>
 <li>
-<p><a href="https://github.com/tektoncd/cli/releases/download/v0.11.0/tkn_0.11.0_Windows_x86_64.zip">Download for Windows</a></p>
+<p><a href="https://github.com/tektoncd/cli/releases/download/v{tekton-cli-version}/tkn_{tekton-cli-version}_Windows_x86_64.zip">Download for Windows</a></p>
 </li>
 </ul>
 </div>
@@ -698,8 +710,8 @@ tekton-pipelines-webhook-75bc7666c-9crwq       1/1     Running   85s</code></pre
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Client version: 0.11.0
-Pipeline version: v0.11.3
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Client version: {tekton-cli-version}
+Pipeline version: {tekton-version}
 Triggers version: unknown</code></pre>
 </div>
 </div>

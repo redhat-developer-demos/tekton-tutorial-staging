@@ -538,15 +538,16 @@ The <a href="#tekton-task-run">TaskRun</a> could override the parameter values, 
 <div class="listingblock">
 <div class="title">List application source code</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: source-lister
 spec:
   params:
     - name: contextDir
-      description: 'The context directory within the repository for sources'
-      default: apps/greeter/java/quarkus
+      description: "The context directory within the repository for sources"
+      default: quarkus
   resources:
     inputs:
       - name: source
@@ -554,7 +555,7 @@ spec:
   steps:
     - name: ls-build-sources
       image: busybox
-      command: ['ls', '-ltr', '/workspace/source/$(inputs.params.contextDir)']</code></pre>
+      command: ["ls", "-ltr", "/workspace/source/$(inputs.params.contextDir)"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -858,7 +859,7 @@ spec:
     - image: alpine
       script: | <i class="conum" data-value="2"></i><b>(2)</b>
         #!/bin/sh
-        echo 'Tekton Rocks!!'</code></pre>
+        echo 'Meeow!! from Tekton 😺🚀'</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -971,8 +972,7 @@ echoer                 18 minutes ago</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">TaskRun started: echoer-run-75n6g
 Waiting for logs to be available...
-[unnamed-0] + echo 'Tekton Rocks!!'
-[unnamed-0] Tekton Rocks!!</code></pre>
+[unnamed-0] Meeow!! from Tekton 😺🚀</code></pre>
 </div>
 </div>
 </div>
@@ -983,12 +983,16 @@ Waiting for logs to be available...
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl config set-context --current --namespace=tektontutorial &amp;&amp; \
-tkn clustertask start echoer --showlog</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl config set-context --current --namespace=tektontutorial</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn clustertask start echoer --showlog</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The command should produce an identical output as show <a href="#tekton-rocks-output">above</a>.</p>
+<p>The command should produce an identical output as shown in <a href="#tekton-rocks-output">above</a>.</p>
 </div>
 </div>
 </div>
@@ -1051,7 +1055,7 @@ tkn clustertask start echoer --showlog</code></pre>
     params:
       - name: contextDir <i class="conum" data-value="2"></i><b>(2)</b>
         description: the context dir within source
-        default: .
+        default: springboot
       - name: destinationImage <i class="conum" data-value="3"></i><b>(3)</b>
         description: the fully qualified image name
         default: "$(outputs.resources.builtImage.url)"
@@ -1123,6 +1127,8 @@ outputs:
     - mvn
   args: <i class="conum" data-value="3"></i><b>(3)</b>
     - -DskipTests
+    - -pl
+    - $(inputs.params.contextDir)
     - clean
     - package
   env: <i class="conum" data-value="4"></i><b>(4)</b>
@@ -1134,7 +1140,7 @@ outputs:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the working dir or the context directory within the sources from there the build command will be run</td>
+<td>the working dir or the context directory within the sources from where the build command(s) will be run</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1142,7 +1148,7 @@ outputs:
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>the build command arguments</td>
+<td>the maven build command arguments</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -1217,7 +1223,8 @@ outputs:
 <div class="listingblock">
 <div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">build-app-task.yaml</a></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: build-app
@@ -1231,14 +1238,14 @@ spec:
       default: <a href="https://repo.maven.apache.org/maven2/" class="bare">https://repo.maven.apache.org/maven2/</a>
     - name: destinationImage
       description: the fully qualified image name
-      default: '$(outputs.resources.builtImage.url)'
+      default: "$(outputs.resources.builtImage.url)"
     - name: dockerFile
       description: the docker file to used for building the application
       default: Dockerfile
     - name: tlsVerify
       description: tls verify
       type: string
-      default: 'false'
+      default: "false"
   resources:
     inputs:
       - name: source
@@ -1248,8 +1255,8 @@ spec:
         type: image
   steps:
     - name: build-sources
-      image: docker.io/maven:3.6.3-jdk-8-slim
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+      image: docker.io/maven:3.6.3-openjdk-11-slim
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
       command:
         - mvn
       args:
@@ -1261,17 +1268,17 @@ spec:
           value: /home/tekton
     - name: build-image
       image: quay.io/buildah/stable
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
       command:
-        - 'buildah'
+        - "buildah"
       args:
-        - 'bud'
-        - '--layers'
-        - '-f'
-        - '$(inputs.params.dockerFile)'
-        - '-t'
-        - '$(inputs.params.destinationImage)'
-        - '.'
+        - "bud"
+        - "--layers"
+        - "-f"
+        - "$(inputs.params.dockerFile)"
+        - "-t"
+        - "$(inputs.params.destinationImage)"
+        - "."
       securityContext:
         privileged: true
         runAsUser: 0
@@ -1280,14 +1287,14 @@ spec:
           mountPath: /var/lib/containers
     - name: push-image
       image: quay.io/buildah/stable
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
       command:
-        - 'buildah'
+        - "buildah"
       args:
-        - 'push'
-        - '--tls-verify=$(inputs.params.tlsVerify)'
+        - "push"
+        - "--tls-verify=$(inputs.params.tlsVerify)"
         - $(inputs.params.destinationImage)
-        - 'docker://$(inputs.params.destinationImage)'
+        - "docker://$(inputs.params.destinationImage)"
       securityContext:
         runAsUser: 0
         privileged: true
@@ -1381,7 +1388,7 @@ source-lister   7 minutes ago</code></pre>
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn task start -n tektontutorial build-app \<i class="conum" data-value="1"></i><b>(1)</b>
   --inputresource='source=git-source' \<i class="conum" data-value="2"></i><b>(2)</b>
   --outputresource='builtImage=tekton-tutorial-greeter-image' \<i class="conum" data-value="3"></i><b>(3)</b>
-  --param contextDir='apps/greeter/java/springboot' \<i class="conum" data-value="4"></i><b>(4)</b>
+  --param contextDir='springboot' \<i class="conum" data-value="4"></i><b>(4)</b>
   --showlog<i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
@@ -1569,7 +1576,7 @@ kubectl expose pod demo-greeter -n tektontutorial --port 8080 --type=NodePort</c
 </div>
 </div>
 <div class="paragraph">
-<p>The above command should show an output like <strong>hello</strong></p>
+<p>The above command should show an output like <strong>Meeow!! from Tekton 😺🚀</strong></p>
 </div>
 </div>
 </div>
@@ -1598,7 +1605,8 @@ volumeMounts:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: build-app
@@ -1619,14 +1627,14 @@ spec:
       default: https://repo.maven.apache.org/maven2/
     - name: destinationImage
       description: the fully qualified image name
-      default: '$(outputs.resources.builtImage.url)'
+      default: "$(outputs.resources.builtImage.url)"
     - name: dockerFile
       description: the docker file to used for building the application
       default: Dockerfile
     - name: tlsVerify
       description: tls verify
       type: string
-      default: 'false'
+      default: "false"
   resources:
     inputs:
       - name: source
@@ -1636,7 +1644,7 @@ spec:
         type: image
   steps:
     - name: build-sources
-      image: docker.io/maven:3.6.3-jdk-8-slim
+      image: docker.io/maven:3.6.3-openjdk-11-slim
       command:
         - mvn
       args:
@@ -1646,30 +1654,30 @@ spec:
       env:
         - name: user.home
           value: /home/tekton
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
     - name: build-image
       image: quay.io/buildah/stable
       command:
-        - 'buildah'
+        - "buildah"
       args:
-        - 'bud'
-        - '--layers'
-        - '-f'
-        - '$(inputs.params.dockerFile)'
-        - '-t'
-        - '$(inputs.params.destinationImage)'
-        - '.'
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+        - "bud"
+        - "--layers"
+        - "-f"
+        - "$(inputs.params.dockerFile)"
+        - "-t"
+        - "$(inputs.params.destinationImage)"
+        - "."
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
     - name: push-image
       image: quay.io/buildah/stable
       command:
-        - 'buildah'
+        - "buildah"
       args:
-        - 'push'
-        - '--tls-verify=$(inputs.params.tlsVerify)'
+        - "push"
+        - "--tls-verify=$(inputs.params.tlsVerify)"
         - $(inputs.params.destinationImage)
-        - 'docker://$(inputs.params.destinationImage)'
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+        - "docker://$(inputs.params.destinationImage)"
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
   volumes:
     - name: varlibc
       emptyDir: {}</code></pre>
@@ -1693,7 +1701,7 @@ spec:
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn task start -n tektontutorial build-app \
   --inputresource='source=git-source' \
   --outputresource='builtImage=tekton-tutorial-greeter-image' \
-  --param contextDir='apps/greeter/java/springboot' \
+  --param contextDir='springboot' \
   --showlog</code></pre>
 </div>
 </div>
@@ -1795,9 +1803,15 @@ The Task steps can override the stepTemplate values.
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl delete pod -n tektontutorial demo-greeter
-kubectl delete svc -n tektontutorial demo-greeter
-# cleans all completed and failed pods
-$TUTORIAL_HOME/bin/clean_completed.sh</code></pre>
+kubectl delete svc -n tektontutorial demo-greeter</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Clean all completed and failed pods</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$TUTORIAL_HOME/bin/clean_completed.sh</code></pre>
 </div>
 </div>
 </div>
