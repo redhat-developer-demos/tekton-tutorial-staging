@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Cloud Native Triggers :: Tekton Tutorial(Staging)</title>
-    <link rel="canonical" href="https://redhat-scholars.github.io/tekton-tutorial-staging/tekton-tutorial/openshift/cloud_native_triggers.html">
-    <link rel="prev" href="cloud_native_pipeline.html">
+    <title>OpenShift Triggers :: Tekton Tutorial(Staging)</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/tekton-tutorial-staging/tekton-tutorial/openshift/openshift_triggers.html">
+    <link rel="prev" href="openshift_pipelines.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../../_/css/site.css">
   </head>
@@ -332,46 +332,52 @@
     <a class="nav-link" href="index.html">OpenShift Pipelines</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html">Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="cloud_native_pipeline.html">Pipelines</a>
+    <a class="nav-link" href="openshift_pipelines.html">Pipelines</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#ocp-create-project">Create Project</a>
+    <a class="nav-link" href="openshift_pipelines.html#ocp-create-project">Create Project</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#required-tasks">Required Cluster Tasks</a>
+    <a class="nav-link" href="openshift_pipelines.html#openshift-pipelines-prep-app-deploy">Prepare Application Deployment</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#ocp-update-cluster-tasks">Update Cluster Tasks</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift_pipelines.html#required-tasks">Required Cluster Tasks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="openshift_pipelines.html#ocp-update-cluster-tasks">Update Cluster Tasks</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#ocp-deploy-app-from-git">Deploy Application from GitHub</a>
+    <a class="nav-link" href="openshift_pipelines.html#ocp-deploy-app-from-git">Deploy Application from GitHub</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#ocp-create-java-ksvc-pipeline-tpl">Pipeline Template for Java and Knative Service</a>
+    <a class="nav-link" href="openshift_pipelines.html#ocp-create-java-ksvc-pipeline-tpl">Pipeline Template for Java and Knative Service</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#openshift-pipelines-prep-app-deploy">Prepare Application Deployment</a>
+    <a class="nav-link" href="openshift_pipelines.html#odc-create-ksvc-java-app">Deploy Application with Pipeline</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#odc-create-ksvc-java-app">Deploy Application with Pipeline</a>
+    <a class="nav-link" href="openshift_pipelines.html#odc-view-pipelines">View Pipelines</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#odc-view-pipelines">View Pipelines</a>
+    <a class="nav-link" href="openshift_pipelines.html#odc-watch-pipelines">Watch Pipelines</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#odc-watch-pipelines">Watch Pipelines</a>
+    <a class="nav-link" href="openshift_pipelines.html#odc-view-app">Application Topology</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#odc-view-app">Application Topology</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="cloud_native_pipeline.html#odc-pipeline-points">Points to Ponder</a>
+    <a class="nav-link" href="openshift_pipelines.html#odc-pipeline-points">Points to Ponder</a>
   </li>
 </ul>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="cloud_native_triggers.html">Triggers</a>
+    <a class="nav-link" href="openshift_triggers.html">Triggers</a>
   </li>
 </ul>
   </li>
@@ -391,14 +397,14 @@
   <ul>
     <li><a href="../index.html">Tekton Tutorial</a></li>
     <li><a href="index.html">OpenShift Pipelines</a></li>
-    <li><a href="cloud_native_triggers.html">Triggers</a></li>
+    <li><a href="openshift_triggers.html">Triggers</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/tekton-tutorial/edit/master/documentation/modules/openshift/pages/cloud_native_triggers.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/tekton-tutorial/edit/master/documentation/modules/openshift/pages/openshift_triggers.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Cloud Native Triggers</h1>
+<h1 class="page">OpenShift Triggers</h1>
 <div class="sect1">
 <h2 id="openshift-triggers-overview"><a class="anchor" href="#openshift-triggers-overview"></a>Overview</h2>
 <div class="sectionbody">
@@ -406,7 +412,7 @@
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="cloud_native_pipeline.html">Pipelines</a></span>
+  <span class="prev"><a href="openshift_pipelines.html">Pipelines</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

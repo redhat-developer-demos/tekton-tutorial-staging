@@ -333,46 +333,52 @@
     <a class="nav-link" href="openshift/index.html">OpenShift Pipelines</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openshift/setup.html">Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html">Pipelines</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html">Pipelines</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-create-project">Create Project</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-create-project">Create Project</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#required-tasks">Required Cluster Tasks</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#openshift-pipelines-prep-app-deploy">Prepare Application Deployment</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-update-cluster-tasks">Update Cluster Tasks</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#required-tasks">Required Cluster Tasks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-update-cluster-tasks">Update Cluster Tasks</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-deploy-app-from-git">Deploy Application from GitHub</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-deploy-app-from-git">Deploy Application from GitHub</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#ocp-create-java-ksvc-pipeline-tpl">Pipeline Template for Java and Knative Service</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-create-java-ksvc-pipeline-tpl">Pipeline Template for Java and Knative Service</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#openshift-pipelines-prep-app-deploy">Prepare Application Deployment</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-create-ksvc-java-app">Deploy Application with Pipeline</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-create-ksvc-java-app">Deploy Application with Pipeline</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-view-pipelines">View Pipelines</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-view-pipelines">View Pipelines</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-watch-pipelines">Watch Pipelines</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-watch-pipelines">Watch Pipelines</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-view-app">Application Topology</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-view-app">Application Topology</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="openshift/cloud_native_pipeline.html#odc-pipeline-points">Points to Ponder</a>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-pipeline-points">Points to Ponder</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="openshift/cloud_native_triggers.html">Triggers</a>
+    <a class="nav-link" href="openshift/openshift_triggers.html">Triggers</a>
   </li>
 </ul>
   </li>
@@ -723,10 +729,12 @@ Triggers version: unknown</code></pre>
 </td>
 <td class="content">
 Since Tekton Triggers is not installed, the version is shown as unknown
-<strong>Configuring Kubernetes namespace</strong>
 </td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p><strong>Configuring Kubernetes namespace</strong></p>
 </div>
 <div class="paragraph">
 <p>All the tutorial exercises will be deployed in namespace called <code>tektontutorial</code>:</p>
@@ -740,16 +748,16 @@ kubectl config set-context --current --namespace=tektontutorial</code></pre>
 </div>
 <div class="tab-pane" aria-labelledby="tabset1_openshift">
 <div class="paragraph">
-<p>The following section details on how to install openshift-pipeline(Tekton on OpenShift).</p>
+<p>The following section details on how to install OpenShift Pipelines(Tekton on OpenShift).</p>
 </div>
 <div class="paragraph">
-<p><strong>Login as admin</strong></p>
+<p>== Login as Cluster Admin</p>
 </div>
 <div class="paragraph">
-<p>Login to OpenShift console using the cluster admin credentials. Follow the <a href="https://docs.openshift.com/container-platform/4.5/pipelines/installing-pipelines.html">OpenShift Documentation</a> to have OpenShift Pipelines installed in your OpenShift cluster.</p>
+<p>Login to OpenShift console using the cluster admin credentials. Follow the <a href="https://docs.openshift.com/container-platform/v4.5+/pipelines/installing-pipelines.html" target="_blank" rel="noopener">OpenShift Documentation</a> to have OpenShift Pipelines installed in your OpenShift cluster.</p>
 </div>
 <div class="paragraph">
-<p>All the tutorial exercises will be deployed in namespace called <code>tektontutorial</code>:</p>
+<p>Unless and until explictiy quoted, all the tutorial exercises will be deployed in namespace called <code>tektontutorial</code>:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">

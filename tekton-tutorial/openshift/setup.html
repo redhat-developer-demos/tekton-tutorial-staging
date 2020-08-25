@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>OpenShift Pipelines :: Tekton Tutorial(Staging)</title>
-    <link rel="canonical" href="https://redhat-scholars.github.io/tekton-tutorial-staging/tekton-tutorial/openshift/index.html">
-    <link rel="prev" href="../triggers.html">
-    <link rel="next" href="setup.html">
+    <title>Openshift Pipelines :: Tekton Tutorial(Staging)</title>
+    <link rel="canonical" href="https://redhat-scholars.github.io/tekton-tutorial-staging/tekton-tutorial/openshift/setup.html">
+    <link rel="prev" href="index.html">
+    <link rel="next" href="openshift_pipelines.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../../_/css/site.css">
   </head>
@@ -328,11 +328,11 @@
   </li>
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="index.html">OpenShift Pipelines</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="setup.html">Setup</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -398,30 +398,83 @@
   <ul>
     <li><a href="../index.html">Tekton Tutorial</a></li>
     <li><a href="index.html">OpenShift Pipelines</a></li>
+    <li><a href="setup.html">Setup</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/tekton-tutorial/edit/master/documentation/modules/openshift/pages/index.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/tekton-tutorial/edit/master/documentation/modules/openshift/pages/setup.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">OpenShift Pipelines</h1>
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
+<h1 class="page">Openshift Pipelines</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
-<p>All the exercies as part of this chapter works only with OpenShift</p>
+<p>The following section details on how to install OpenShift Pipelines(Tekton on OpenShift).</p>
 </div>
-</td>
-</tr>
-</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_login_as_cluster_admin"><a class="anchor" href="#_login_as_cluster_admin"></a>Login as Cluster Admin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Login to OpenShift console using the cluster admin credentials. Follow the <a href="https://docs.openshift.com/container-platform/v4.5+/pipelines/installing-pipelines.html" target="_blank" rel="noopener">OpenShift Documentation</a> to have OpenShift Pipelines installed in your OpenShift cluster.</p>
+</div>
+<div class="paragraph">
+<p>Unless and until explictiy quoted, all the tutorial exercises will be deployed in namespace called <code>tektontutorial</code>:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc new-project tektontutorial</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You have now installed all the OpenShift pipelines components to run the tutorial exercises.</p>
+</div>
+<div id="install-tekton-cli" class="paragraph">
+<p><strong>Install Tekton CLI</strong></p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/tektoncd/cli">Tekton CLI</a> is command line utility used to interact with the Tekton resources.</p>
+</div>
+<div class="paragraph">
+<p>Download the Tekton cli and add to your path:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/tektoncd/cli/releases/download/v{tekton-cli-version}/tkn_{tekton-cli-version}_Darwin_x86_64.tar.gz">Download for macOS</a></p>
+</li>
+<li>
+<p><a href="https://github.com/tektoncd/cli/releases/download/v{tekton-cli-version}/tkn_{tekton-cli-version}_Linux_x86_64.tar.gz">Download for Linux</a></p>
+</li>
+<li>
+<p><a href="https://github.com/tektoncd/cli/releases/download/v{tekton-cli-version}/tkn_{tekton-cli-version}_Windows_x86_64.zip">Download for Windows</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Verify the Tekton cli</strong></p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn version</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The command should show a result like:</p>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Client version: {tekton-cli-version}
+Pipeline version: {tekton-version}
+Triggers version: {triggers-version}</code></pre>
+</div>
+</div>
+</div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../triggers.html">Triggers</a></span>
-  <span class="next"><a href="setup.html">Setup</a></span>
+  <span class="prev"><a href="index.html">OpenShift Pipelines</a></span>
+  <span class="next"><a href="openshift_pipelines.html">Pipelines</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
