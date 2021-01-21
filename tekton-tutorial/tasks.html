@@ -616,7 +616,15 @@ Namespace:   tektontutorial
 ⚓ Params
 
  NAME           TYPE     DESCRIPTION              DEFAULT VALUE
- ∙ contextDir   string   The context directo...   apps/greeter/java/quarkus
+ ∙ contextDir   string   The context directo...   quarkus
+
+📝 Results
+
+ No results
+
+📂 Workspaces
+
+ No workspaces
 
 🦶 Steps
 
@@ -679,11 +687,11 @@ Namespace:   tektontutorial
 </td>
 <td class="content">
 <div class="paragraph">
-<p>The command might ask your to confirm any default values, in this task we have a parameter called <code>contextDir</code> which has a default value ``, so when starting the command the Tekton CLI will ask you confirm the same, like:</p>
+<p>The command might ask your to confirm any default values, in this task we have a parameter called <code>contextDir</code> which has a default value <code>quarkus</code>, so when starting the command the Tekton CLI will ask you confirm the same, like:</p>
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">? Value for param `contextDir` of type `string`? (Default is `apps/greeter/java/quarkus`) (apps/greeter/java/quarkus)</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">? Value for param `contextDir` of type `string`? (Default is `quarkus`)</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -698,7 +706,7 @@ Namespace:   tektontutorial
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">? Value for param `contextDir` of type `string`? (Default is `apps/greeter/java/quarkus`) apps/greeter/java/quarkus
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">? Value for param `contextDir` of type `string`? (Default is `quarkus`)
 TaskRun started: source-lister-run-nbpvz
 Waiting for logs to be available...
 [git-source-git-source-qtp5j] {"level":"info","ts":1595743350.5350783,"caller":"git/git.go:105","msg":"Successfully cloned https://github.com/redhat-scholars/tekton-tutorial @ master in path /workspace/source"}
@@ -797,7 +805,7 @@ Waiting for logs to be available...
 <h2 id="tekton-task-list-ws"><a class="anchor" href="#tekton-task-list-ws"></a>Know the workspace directory</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the example above, there is a log which shows the <code>git clone</code> command that cloned the application sources to the <code>/workspace/source</code> directory. The <strong>workspace</strong> directory is where your Task/Pipeline sources/build atrifacts will be cloned and generated. The <code>source</code> sub-path under is the directory where Tekton cloned the applicaiton sources. It is usually the name of the resources -&#8594; inputs -&#8594; Resource of type Git.</p>
+<p>In the example above, there is a log which shows the <code>git clone</code> command that cloned the application sources to the <code>/workspace/source</code> directory. The <strong>workspace</strong> directory is where your Task/Pipeline sources/build artifacts will be cloned and generated. The <code>source</code> is a sub-path, under which Tekton cloned the application sources. It is usually the name of the resources &#8594; inputs &#8594; Resource of type <strong>Git</strong>.</p>
 </div>
 </div>
 </div>
@@ -830,7 +838,7 @@ kubectl config set-context --current --namespace clustertask-demo</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The reason that there are no Tasks found us that, we have not created any ClusterTask yet. If the Task is not a ClusterTask type then we will not be able to run the Task in namespaces where its not installed. Try running our <code>source-lister</code> task  from within <code>clustertask-demo</code>:</p>
+<p>The reason that there are no Tasks found us that, we have not created any <code>ClusterTask</code> yet. If the <code>Task</code> is not of a <code>ClusterTask</code> type then we will not be able to run the Task in namespaces other than where it was deployed. Try running our <code>source-lister</code> task  from within <code>clustertask-demo</code>:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -842,9 +850,7 @@ kubectl config set-context --current --namespace clustertask-demo</code></pre>
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash"># shifting to clustertask-demo
-Context "tektontutorial" modified.
-Error: Task name source-lister does not exist in namespace clustertask-demo</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Error: Task name source-lister does not exist in namespace clustertask-demo</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -937,6 +943,14 @@ echoer                 18 minutes ago</code></pre>
 
  No params
 
+📝 Results
+
+ No results
+
+📂 Workspaces
+
+ No workspaces
+
 🦶 Steps
 
  ∙ unnamed-0
@@ -989,6 +1003,11 @@ Waiting for logs to be available...
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl config set-context --current --namespace=tektontutorial</code></pre>
 </div>
 </div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Context "tektontutorial" modified.</code></pre>
+</div>
+</div>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn clustertask start echoer --showlog</code></pre>
@@ -1025,7 +1044,10 @@ Waiting for logs to be available...
 <h2 id="tekton-task-build-sources"><a class="anchor" href="#tekton-task-build-sources"></a>Build Cloud Native Application</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Tekton Task can be of one or more steps. A Cloud Native Java Application at minimum comprises of the following steps:</p>
+<p>All the Tekton Tasks that we created and ran so far had only one <code>Step</code>, but the Tekton Tasks can have more than one <code>Step</code>.</p>
+</div>
+<div class="paragraph">
+<p>Lets take an example of buildaing a Cloud Native Java Application, at minimum the <code>Task</code> need to do the following:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -1036,18 +1058,31 @@ Waiting for logs to be available...
 <p>Building the linux container image from the build artifacts</p>
 </li>
 <li>
-<p>Pushing the built container image to remote registry like <a href="https://quay.io">Quay.io</a> or <a href="https://hub.docker.com">Docker Hub</a></p>
+<p>Pushing the built container image to remote container registry like <a href="https://quay.io">Quay.io</a> or <a href="https://hub.docker.com">Docker Hub</a></p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
-<p>The task <code>build-app</code> is used to build the <a href="https://github.com/redhat-scholars/tekton-tutorial/tree/master/apps/greeter/java/quarkus">Java application</a> that is part of the tutorial. As a step one(<code>build-sources</code>) the application will be built using <a href="https://apache.maven.org">Apache Maven</a>, then the step two (<code>build-image</code>) the application artifacts a <strong>jar</strong> in this case will be used to built the linux container image using <a href="https://buildah.io">buildah</a>, the <a href="https://github.com/redhat-scholars/tekton-tutorial/tree/master/apps/greeter/java/quarkus/Dockerfile.jvm">Dockerfile</a> in the sources will be used as base to build the linux container image and as part of the last step(<code>build-push</code>) the built linux container image will be pushed to the container registry.</p>
+<p>The task <code>build-app</code> is used to build the <a href="https://github.com/redhat-scholars/tekton-tutorial/tree/master/apps/greeter/java/quarkus">Java application</a> that is part of the tutorial. The Task can be split into following three <code>Steps</code>:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>As a step one(<code>build-sources</code>) the application will be built using <a href="https://apache.maven.org">Apache Maven</a></p>
+</li>
+<li>
+<p>then the step two (<code>build-image</code>) the application artifacts a <strong>jar</strong> in this case will be used to built the linux container image using <a href="https://buildah.io">buildah</a>, the <a href="https://github.com/redhat-scholars/tekton-tutorial/tree/master/apps/greeter/java/quarkus/Dockerfile.jvm">Dockerfile</a> in the sources will be used as base to build the linux container image</p>
+</li>
+<li>
+<p>As part of the last step(<code>build-push</code>) the built linux container image will be pushed to the container registry.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
-<p>The following section explains the three Task steps. The <a href="#tekton-task-deploy">Deploy a task</a> will finally deploy all these three steps together as one single <code>build-app</code> task.</p>
+<p>The following section explains the three Task <code>Steps</code>. The <a href="#tekton-task-deploy">Deploy a task</a> will finally deploy all these three steps together as one single <code>build-app</code> task.</p>
 </div>
 <div class="sect2">
-<h3 id="task-parameters"><a class="anchor" href="#task-parameters"></a>Step :: Task Inputs and Outputs</h3>
+<h3 id="task-parameters"><a class="anchor" href="#task-parameters"></a>Task Inputs and Outputs</h3>
 <div class="listingblock">
 <div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">task inputs and outputs</a></div>
 <div class="content">
@@ -1119,7 +1154,7 @@ outputs:
 </div>
 </div>
 <div class="sect2">
-<h3 id="build-sources"><a class="anchor" href="#build-sources"></a>Step 1 :: Build Application Sources</h3>
+<h3 id="build-sources"><a class="anchor" href="#build-sources"></a>Step#1 - Build Application Sources</h3>
 <div class="listingblock">
 <div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L32-L43" target="_blank" rel="noopener">step-build-sources</a></div>
 <div class="content">
@@ -1161,7 +1196,7 @@ outputs:
 </div>
 </div>
 <div class="sect2">
-<h3 id="build-linux-image"><a class="anchor" href="#build-linux-image"></a>Step 2 :: Build Application Linux Container Image</h3>
+<h3 id="build-linux-image"><a class="anchor" href="#build-linux-image"></a>Step#2 - Build Application Linux Container Image</h3>
 <div class="listingblock">
 <div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L44-L62" target="_blank" rel="noopener">step-build-image</a></div>
 <div class="content">
@@ -1199,7 +1234,7 @@ outputs:
 </div>
 </div>
 <div class="sect2">
-<h3 id="push-linux-image"><a class="anchor" href="#push-linux-image"></a>Step 3:: Push Application Linux Container Image</h3>
+<h3 id="push-linux-image"><a class="anchor" href="#push-linux-image"></a>Step#3 - Push Application Linux Container Image</h3>
 <div class="listingblock">
 <div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L63-L78" target="_blank" rel="noopener">step-build-image</a></div>
 <div class="content">
@@ -1536,10 +1571,7 @@ step-image-digest-exporter-52lh6</code></pre>
 <div class="tab-pane" aria-labelledby="tabset1_minikube">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl run demo-greeter -n tektontutorial \
- --generator='run-pod/v1' \
- --image='example.com/rhdevelopers/tekton-tutorial-greeter' &amp;&amp; \
-kubectl expose pod demo-greeter -n tektontutorial --port 8080 --type=NodePort</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n tektontutorial -f $TUTORIAL_HOME/kubernetes/demo-greeter.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1805,8 +1837,7 @@ The Task steps can override the stepTemplate values.
 <div class="sectionbody">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl delete pod -n tektontutorial demo-greeter
-kubectl delete svc -n tektontutorial demo-greeter</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl delete -n tektontutorial -f $TUTORIAL_HOME/kubernetes/demo-greeter.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">

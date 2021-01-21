@@ -426,30 +426,37 @@ conditions                       tekton.dev   true         Condition
 pipelineresources                tekton.dev   true         PipelineResource
 pipelineruns        pr,prs       tekton.dev   true         PipelineRun
 pipelines                        tekton.dev   true         Pipeline
+runs                             tekton.dev   true         Run
 taskruns            tr,trs       tekton.dev   true         TaskRun
-tasks                            tekton.dev   true         Task</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_triggers_api"><a class="anchor" href="#_triggers_api"></a>Triggers API</h2>
-<div class="sectionbody">
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl api-resources --api-group='triggers.tekton.dev'</code></pre>
+tasks                            tekton.dev   true         Task
+
+== Triggers API
+
+[.console-input]
+[source,bash,subs="+macros,attributes+"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The command show an output like:</p>
+<p>kubectl api-resources --api-group='triggers.tekton.dev'</p>
 </div>
-<div class="listingblock console-output">
+<div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                     SHORTNAMES   APIGROUP              NAMESPACED   KIND
+<pre>The command show an output like:
+
+[.console-output]
+[source,bash]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>NAME                     SHORTNAMES   APIGROUP              NAMESPACED   KIND
 clustertriggerbindings   ctb          triggers.tekton.dev   false        ClusterTriggerBinding
 eventlisteners           el           triggers.tekton.dev   true         EventListener
 triggerbindings          tb           triggers.tekton.dev   true         TriggerBinding
-triggertemplates         tt           triggers.tekton.dev   true         TriggerTemplate</code></pre>
+triggertemplates         tt           triggers.tekton.dev   true         TriggerTemplate</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre></pre>
 </div>
 </div>
 </div>

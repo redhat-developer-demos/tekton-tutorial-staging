@@ -558,7 +558,12 @@ service/nexus        NodePort    10.100.205.22   &lt;none&gt;        8081:31743/
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$(minikube service nexus -n triggers-demo)</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">minikube -p tektontutorial service nexus -n triggers-demo --url</code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">http://192.168.64.27:30102</code></pre>
 </div>
 </div>
 </div>
@@ -668,7 +673,7 @@ Do it only once per cluster
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset3_kubernetes"></a>Kubernetes</p>
+<p><a id="tabset3_minikube"></a>Minikube</p>
 </li>
 <li>
 <p><a id="tabset3_openshift"></a>OpenShift</p>
@@ -676,14 +681,14 @@ Do it only once per cluster
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset3_kubernetes">
+<div class="tab-pane" aria-labelledby="tabset3_minikube">
 <div class="paragraph">
-<p>In minkube cluster it should show an output like:</p>
+<p>In minikube cluster it should show an output like:</p>
 </div>
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code>NAME                 PROVISIONER                RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
-standard (<mark>default</mark>)   k8s.io/minikube-hostpath   Delete          Immediate           false                  9h</code></pre>
+standard (default)   k8s.io/minikube-hostpath   Delete          Immediate           false                  44m</code></pre>
 </div>
 </div>
 </div>
@@ -942,7 +947,19 @@ In OpenShift you might not need the <strong>pipeline</strong> SA, as the OpenShi
 </div>
 </div>
 <div class="paragraph">
-<p>You should now be able to open the <strong>Repository Clone url</strong> from the output above and view the repository content.</p>
+<p>You should now be able to open the <a href="http://$GITEA_HOME/tekton-tutorial-greeter.git" class="bare">http://$GITEA_HOME/tekton-tutorial-greeter.git</a> and check the repository sources, that we will use as part of this chapter&#8217;s exercises.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Gitea admin user is <strong>gitea</strong> and password <strong>gitea</strong>.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -964,7 +981,7 @@ In OpenShift you might not need the <strong>pipeline</strong> SA, as the OpenShi
 <div class="tab-pane" aria-labelledby="tabset5_minikube">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -f <a href="https://storage.googleapis.com/tekton-releases/triggers/previous/v0.6.1/release.yaml" class="bare">https://storage.googleapis.com/tekton-releases/triggers/previous/v0.6.1/release.yaml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -f <a href="https://storage.googleapis.com/tekton-releases/triggers/previous/v0.10.2/release.yaml" class="bare">https://storage.googleapis.com/tekton-releases/triggers/previous/v0.10.2/release.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1064,7 +1081,7 @@ tekton-greeter-trigger-template   1 minute ago</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-by default the greeter pipeline&#8217;s default image tag that it builds to is the example.com addon registry for minikube.  Hence, no further updates to the TriggerTemplate is necessary
+by default the greeter pipeline&#8217;s default image tag that it builds to is the <code>example.com/tekton-tutorial/greeter</code>.  Hence, no further updates to the TriggerTemplate is necessary
 </td>
 </tr>
 </table>
@@ -1318,17 +1335,20 @@ gitea-webhook   4 seconds ago</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Each EventListener will have a service named <code>el-&lt;EventListener Name&gt;</code> exposed automatically for sources to send events to Triggers.</p>
+<p>Wait for the <code>gitea-webhook</code> event listener pod  to be running, each EventListener will have a service named <code>el-&lt;EventListener Name&gt;</code> exposed automatically for sources to send events to Triggers.</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get svc -n triggers-demo -leventlistener=gitea-webhook</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get pods,svc -n triggers-demo -leventlistener=gitea-webhook</code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME              TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
-<mark>el-gitea-webhook   ClusterIP   10.97.199.207    &lt;none&gt;        8080/TCP         51s</mark></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                                    READY   STATUS    RESTARTS   AGE
+pod/el-gitea-webhook-848875db8f-25r2r   1/1     Running   0          58s
+
+NAME                       TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)    AGE
+<mark>service/el-gitea-webhook   ClusterIP   10.96.121.97   &lt;none&gt;        8080/TCP   58s</mark></code></pre>
 </div>
 </div>
 </div>
@@ -1355,7 +1375,7 @@ gitea-webhook   4 seconds ago</code></pre>
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export EL_WEBHOOK_HOST="$(kubectl get svc -n triggers-demo el-gitea-webhook -o yaml \
   | yq r - 'metadata.name').$(minikube ip).nip.io"
 export EL_WEBHOOK_LISTENER_PORT="$(kubectl get svc -n triggers-demo el-gitea-webhook -o yaml \
-  | yq r - 'spec.ports.(name==http-listener).port')"</code></pre>
+  | yq r - 'spec.ports.(name==listener).port')"</code></pre>
 </div>
 </div>
 <div class="listingblock console-input">
@@ -1498,11 +1518,11 @@ el-gitea-webhook-88bc89db-ld6jz event-listener {"level":"info","logger":"eventli
 <div class="sect2">
 <h3 id="_clone_and_edit_the_source"><a class="anchor" href="#_clone_and_edit_the_source"></a>Clone and Edit the source</h3>
 <div class="paragraph">
-<p>Using your favorite IDE clone the repo <code>tekton-greeter</code> from Gitea using the <a href="#tkn-triggers-init-repo">clone url</a>.</p>
+<p>Using your favorite IDE clone the repo <code>tekton-greeter</code> from Gitea:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone &lt;your gitea tekton-greeter clone url&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone <a href="http://gitea.$(minikube" class="bare">http://gitea.$(minikube</a> -p tektontutorial ip).nip.io/gitea/tekton-tutorial-greeter.git</code></pre>
 </div>
 </div>
 <div class="paragraph">

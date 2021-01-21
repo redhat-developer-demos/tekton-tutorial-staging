@@ -594,7 +594,12 @@ service/nexus        NodePort    10.100.205.22   &lt;none&gt;        8081:31743/
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$(minikube service nexus -n workspace-auth-demo)</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">minikube -p tektontutorial service nexus -n workspace-auth-demo --url</code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">http://192.168.64.27:30102</code></pre>
 </div>
 </div>
 </div>
@@ -704,7 +709,7 @@ Do it only once per cluster
 <div class="ulist tabs">
 <ul>
 <li>
-<p><a id="tabset3_kubernetes"></a>Kubernetes</p>
+<p><a id="tabset3_minikube"></a>Minikube</p>
 </li>
 <li>
 <p><a id="tabset3_openshift"></a>OpenShift</p>
@@ -712,14 +717,14 @@ Do it only once per cluster
 </ul>
 </div>
 <div class="content">
-<div class="tab-pane" aria-labelledby="tabset3_kubernetes">
+<div class="tab-pane" aria-labelledby="tabset3_minikube">
 <div class="paragraph">
-<p>In minkube cluster it should show an output like:</p>
+<p>In minikube cluster it should show an output like:</p>
 </div>
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code>NAME                 PROVISIONER                RECLAIMPOLICY   VOLUMEBINDINGMODE   ALLOWVOLUMEEXPANSION   AGE
-standard (<mark>default</mark>)   k8s.io/minikube-hostpath   Delete          Immediate           false                  9h</code></pre>
+standard (default)   k8s.io/minikube-hostpath   Delete          Immediate           false                  44m</code></pre>
 </div>
 </div>
 </div>
@@ -828,7 +833,7 @@ spec:
     - name: url
       value: https://github.com/redhat-scholars/tekton-tutorial-greeter
     - name: revision
-      value: staging
+      value: master
   workspaces: <i class="conum" data-value="4"></i><b>(4)</b>
     - name: output
       persistentVolumeClaim:
@@ -873,7 +878,8 @@ spec:
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn task start git-clone \
   --namespace=workspace-auth-demo \
   --param url=https://github.com/redhat-scholars/tekton-tutorial-greeter \
-  --param revision=staging \
+  --param revision=master \
+  --param deleteExisting=true \
   --workspace name=output,claimName=tekton-tutorial-sources \
   --use-param-defaults \<i class="conum" data-value="1"></i><b>(1)</b>
   --showlog</code></pre>
@@ -945,14 +951,6 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>View the task run  logs using,</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn tr logs -f -a $(tkn tr ls -n workspace-auth-demo | awk 'NR==2{print $1}')</code></pre>
-</div>
-</div>
-<div class="paragraph">
 <p>It will take few minutes for the TaskRun to start.</p>
 </div>
 <div class="admonitionblock note">
@@ -968,6 +966,14 @@ spec:
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn tr ls</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>View the task run  logs using,</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn tr logs -f -a $(tkn tr ls -n workspace-auth-demo | awk 'NR==2{print $1}')</code></pre>
 </div>
 </div>
 </td>
@@ -993,8 +999,8 @@ tekton-tutorial-sources   Bound    pvc-48aa86ae-ec20-4f0c-a2d0-65d906d41bed   1G
 [clone] + test -z
 [clone] + test -z
 [clone] + test -z
-[clone] + /ko-app/git-init -url https://github.com/redhat-scholars/tekton-tutorial-greeter -revision staging -refspec  -path /workspace/output/ '-sslVerify=true' '-submodules=true' -depth 1
-[clone] {"level":"info","ts":1595778607.616774,"caller":"git/git.go:139","msg":"Successfully cloned https://github.com/redhat-scholars/tekton-tutorial-greeter @ 2e3336657cc1bbf22e3db183a517dcb0a62207b9 (grafted, HEAD, origin/staging) in path /workspace/output/"}
+[clone] + /ko-app/git-init -url https://github.com/redhat-scholars/tekton-tutorial-greeter -revision master -refspec  -path /workspace/output/ '-sslVerify=true' '-submodules=true' -depth 1
+[clone] {"level":"info","ts":1595778607.616774,"caller":"git/git.go:139","msg":"Successfully cloned https://github.com/redhat-scholars/tekton-tutorial-greeter @ 2e3336657cc1bbf22e3db183a517dcb0a62207b9 (grafted, HEAD, origin/master) in path /workspace/output/"}
 [clone] {"level":"info","ts":1595778607.6473103,"caller":"git/git.go:180","msg":"Successfully initialized and updated submodules in path /workspace/output/"}
 [clone] + cd /workspace/output/
 [clone] + git rev-parse+ tr -d '\n'
@@ -1530,7 +1536,7 @@ spec:
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -sSL \
-  <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/kn/0.1/kn-deployer.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/kn/0.1/kn-deployer.yaml</a> \
+  <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/kn/0.1/support/kn-deployer.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/kn/0.1/support/kn-deployer.yaml</a> \
   | yq w - -d0 metadata.namespace workspace-auth-demo \
   | yq w - -d2 subjects.[0].namespace workspace-auth-demo \
   | kubectl apply -f -</code></pre>
@@ -1601,18 +1607,6 @@ spec:
         claimName: tekton-tutorial-sources</code></pre>
 </div>
 </div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The service account to be used with the PipelineRun</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>The Pipeline workspaces mapping</td>
-</tr>
-</table>
-</div>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create -n workspace-auth-demo -f greeter-app-deploy-run.yaml</code></pre>
@@ -1650,11 +1644,11 @@ spec:
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Name:       greeter
 Namespace:  workspace-auth-demo
 Age:        21s
-<mark>URL:        http://greeter.workspace-auth-demo.127.0.0.1.nip.io</mark>
+<mark>URL:        http://greeter.workspace-auth-demo.192.168.64.7.nip.io</mark>
 
 Revisions:
   100%  @latest (greeter-ttyqz-1) [1] (21s)
-        Image:  kind-registry:5000/rhdevelopers/tekton-tutorial-greeter@sha256:79b8a50a6ef29dbc0df5220de5aea13b8b38b7c4cd407ad074968de8cfbd41b6 (at 79b8a5)
+        Image:  example.com/tekton-tutorial/greeter@sha256:79b8a50a6ef29dbc0df5220de5aea13b8b38b7c4cd407ad074968de8cfbd41b6 (at 79b8a5)
 
 Conditions:
   OK TYPE                   AGE REASON
@@ -1687,7 +1681,7 @@ Conditions:
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text"><strong>Meeow from Tekton 😺 !! 🚀</strong></code></pre>
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text"><strong>Tekton 😺 rocks 🚀</strong></code></pre>
 </div>
 </div>
 </div>
@@ -1696,13 +1690,6 @@ Conditions:
 <div class="sect1">
 <h2 id="tekton-ws-cleanup"><a class="anchor" href="#tekton-ws-cleanup"></a>Cleanup</h2>
 <div class="sectionbody">
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl delete -n workspace-auth-demo pipeline --all
-kubectl delete -n workspace-auth-demo pr --all
-kubectl delete -n workspace-auth-demo tr --all</code></pre>
-</div>
-</div>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1714,6 +1701,11 @@ Leave the namespace, nexus, pvc, confimaps created as part of this chapter, as w
 </td>
 </tr>
 </table>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$TUTORIAL_HOME/bin/cleanup.sh workspace-auth-demo</code></pre>
+</div>
 </div>
 </div>
 </div>

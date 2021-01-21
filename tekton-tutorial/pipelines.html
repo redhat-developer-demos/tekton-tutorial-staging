@@ -459,9 +459,9 @@ tekton-tutorial-greeter-image   image   url: example.com/rhdevelopers/tekton-tut
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME            AGE
-build-app       2 hours ago
-source-lister   7 seconds ago</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME            DESCRIPTION   AGE
+build-app                     20 minutes ago
+source-lister                 22 minutes ago</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -507,10 +507,10 @@ source-lister   7 seconds ago</code></pre>
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME               AGE
-build-app          2 hours ago
-openshift-client   3 seconds ago
-source-lister      10 minutes ago</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME               DESCRIPTION              AGE
+build-app                                   21 minutes ago
+openshift-client   This task runs comm...   6 seconds ago
+source-lister                               23 minutes ago</code></pre>
 </div>
 </div>
 </div>
@@ -786,19 +786,28 @@ OpenShift Pipelines creates and uses the <code>pipeline</code> SA by default.
 </table>
 </div>
 <div class="paragraph">
-<p>View the pipeline run logs using,</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn pr logs -f -a $(tkn pr ls -n tektontutorial | awk 'NR==2{print $1}')</code></pre>
-</div>
-</div>
-<div class="paragraph">
 <p>If you see the PipelineRun status as <code>Failed</code> or <code>Error</code> use the following command to check the reason for error:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn pipelinerun describe &lt;pipelinerun-name&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The successful <code>Pipeline</code> run would have created a Kubernetes deployment and service called <code>greeter</code>:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get deploy,svc -n tektontutorial -l=app=greeter</code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                      READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/greeter   1/1     1            1           9m31s
+
+NAME              TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/greeter   NodePort   10.96.251.232   &lt;none&gt;        8080:31918/TCP   9m31s</code></pre>
 </div>
 </div>
 </div>
@@ -809,18 +818,26 @@ OpenShift Pipelines creates and uses the <code>pipeline</code> SA by default.
 <div class="paragraph">
 <p>Get the service URL,</p>
 </div>
+<div class="tabset is-loading">
+<div class="ulist tabs">
+<ul>
+<li>
+<p><a id="tabset1_minikube"></a>Minikube</p>
+</li>
+<li>
+<p><a id="tabset1_openshift"></a>OpenShift</p>
+</li>
+</ul>
+</div>
+<div class="content">
+<div class="tab-pane" aria-labelledby="tabset1_minikube">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SVC_URL=$(minikube -p tektontutorial -n tektontutorial service greeter --url)</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SVC_URL=$(minikube -p tektontutorial -n tektontutorial greeter --url)</code></pre>
 </div>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
+</div>
+<div class="tab-pane" aria-labelledby="tabset1_openshift">
 <div class="paragraph">
 <p>In OpenShift you can use the routes like:</p>
 </div>
@@ -830,9 +847,8 @@ OpenShift Pipelines creates and uses the <code>pipeline</code> SA by default.
 SVC_URL=$(oc get routes greeter -o yaml | yq r - 'spec.url.host' )</code></pre>
 </div>
 </div>
-</td>
-</tr>
-</table>
+</div>
+</div>
 </div>
 <div class="paragraph">
 <p>Run the service,</p>
@@ -851,7 +867,7 @@ SVC_URL=$(oc get routes greeter -o yaml | yq r - 'spec.url.host' )</code></pre>
 <h2 id="tekton-pipeline-cleanup"><a class="anchor" href="#tekton-pipeline-cleanup"></a>Cleanup</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Delete the pipeline service account and its related permissions:</p>
+<p>Clean the completed/failed Task and Pipeline run pods</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">

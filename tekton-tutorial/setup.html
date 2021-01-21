@@ -437,6 +437,12 @@
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://docs.docker.com/docker-for-windows/install">Docker for Windows</a></p></td>
 </tr>
 <tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>Minikube</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://minikube.sigs.k8s.io/docs/start/" class="bare">https://minikube.sigs.k8s.io/docs/start/</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://minikube.sigs.k8s.io/docs/start/" class="bare">https://minikube.sigs.k8s.io/docs/start/</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://minikube.sigs.k8s.io/docs/start/" class="bare">https://minikube.sigs.k8s.io/docs/start/</a></p></td>
+</tr>
+<tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>kubectl</code></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">Install</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://kubernetes.io/docs/tasks/tools/install-kubectl/">Install</a></p></td>
@@ -449,10 +455,10 @@
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/wercker/stern/releases/download/1.11.0/stern_windows_amd64.exe">Download</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/mikefarah/yq">yq</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">brew install yq</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">brew install yq</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">choco install yq</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/mikefarah/yq">yqv3.x</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">brew install yq@3</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">brew install yq@3</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">choco install yq@3</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://httpie.org/">httpie</a></p></td>
@@ -507,22 +513,22 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Tekton <code>v0.14.3</code></p>
+<p>Tekton <code>v0.19.0</code></p>
 </li>
 <li>
-<p>Tekton Triggers <code>v0.6.1</code></p>
+<p>Tekton Triggers <code>v0.10.2</code></p>
 </li>
 <li>
-<p>Minikube <code>v1.12.1+</code></p>
+<p>Minikube <code>v1.16.0</code></p>
 </li>
 <li>
 <p>OpenShift <code>4.6</code></p>
 </li>
 <li>
-<p>Tekton CLI <code>0.12.0</code></p>
+<p>Tekton CLI <code>0.15.0</code></p>
 </li>
 <li>
-<p>Knative Client(kn) <code>v0.16.0</code></p>
+<p>Knative Client(kn) <code>v0.17.3</code></p>
 </li>
 </ul>
 </div>
@@ -571,45 +577,42 @@
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">❌  profile "tektontutorial" not found
 ✅  Created a new profile : tektontutorial
 ✅  minikube profile was successfully set to tektontutorial
-😄  [tektontutorial] minikube v1.12.1 on Darwin 10.15.6
+😄  [tektontutorial] minikube v1.16.0 on Darwin 10.15.6
 ✨  Automatically selected the hyperkit driver
 👍  Starting control plane node tektontutorial in cluster tektontutorial
 🔥  Creating hyperkit VM (CPUs=4, Memory=8192MB, Disk=51200MB) ...
-🐳  Preparing Kubernetes v1.18.3 on Docker 19.03.12 ...
+🐳  Preparing Kubernetes `kubernetes-version` on Docker 20.10.0 ...
 🔎  Verifying Kubernetes components...
 🌟  Enabled addons: default-storageclass, storage-provisioner
-🏄  Done! kubectl is now configured to use "tektontutorial"</code></pre>
+🏄  Done! kubectl is now configured to use "tektontutorial and "default" namespace by default"
+✅  minikube profile was successfully set to tektontutorial</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Switch to the new minikube profile <strong>tektontutorial</strong>, so that all your commands gets executed in the right context:</p>
+<p><strong>Enable Internal Container Registry and Registry Aliases</strong></p>
+</div>
+<div class="paragraph">
+<p>To enable pushing and pulling container images from local internal minikube registry, we will deploy the minikube <a href="https://github.com/kubernetes/minikube/tree/master/deploy/addons/registry">registry</a> addon:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">minikube profile tektontutorial</code></pre>
-</div>
-</div>
-<div class="listingblock console-output">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">✅  minikube profile was successfully set to tektontutorial</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Deploy Registry Helper</strong></p>
-</div>
-<div class="paragraph">
-<p>To enable pushing and pulling container images from local internal minikube registry, we will deploy the minikube <a href="https://github.com/kubernetes/minikube/tree/master/deploy/addons/registry-aliases">registry-aliases</a> addon:</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">minikube addons enable registry &amp;&amp; minikube addons enable registry-aliases</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">minikube addons enable registry</code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">🔎  Verifying registry addon...
-🌟  The 'registry' addon is enabled
-🌟  The 'registry-aliases' addon is enabled</code></pre>
+🌟  The 'registry' addon is enabled</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">minikube addons enable registry-aliases</code></pre>
+</div>
+</div>
+<div class="listingblock console-output">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">🌟  The 'registry-aliases' addon is enabled</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -643,7 +646,7 @@
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply --filename \
-<a href="https://github.com/tektoncd/pipeline/releases/download/v0.14.3/release.yaml" class="bare">https://github.com/tektoncd/pipeline/releases/download/v0.14.3/release.yaml</a></code></pre>
+<a href="https://github.com/tektoncd/pipeline/releases/download/v0.19.0/release.notags.yaml" class="bare">https://github.com/tektoncd/pipeline/releases/download/v0.19.0/release.notags.yaml</a></code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -690,13 +693,13 @@ tekton-pipelines-webhook-75bc7666c-9crwq       1/1     Running   85s</code></pre
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/tektoncd/cli/releases/download/v0.12.0/tkn_0.12.0_Darwin_x86_64.tar.gz">Download for macOS</a></p>
+<p><a href="https://github.com/tektoncd/cli/releases/download/v0.15.0/tkn_0.15.0_Darwin_x86_64.tar.gz">Download for macOS</a></p>
 </li>
 <li>
-<p><a href="https://github.com/tektoncd/cli/releases/download/v0.12.0/tkn_0.12.0_Linux_x86_64.tar.gz">Download for Linux</a></p>
+<p><a href="https://github.com/tektoncd/cli/releases/download/v0.15.0/tkn_0.15.0_Linux_x86_64.tar.gz">Download for Linux</a></p>
 </li>
 <li>
-<p><a href="https://github.com/tektoncd/cli/releases/download/v0.12.0/tkn_0.12.0_Windows_x86_64.zip">Download for Windows</a></p>
+<p><a href="https://github.com/tektoncd/cli/releases/download/v0.15.0/tkn_0.15.0_Windows_x86_64.zip">Download for Windows</a></p>
 </li>
 </ul>
 </div>
@@ -713,9 +716,8 @@ tekton-pipelines-webhook-75bc7666c-9crwq       1/1     Running   85s</code></pre
 </div>
 <div class="listingblock console-output">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Client version: 0.12.0
-Pipeline version: v0.14.3
-Triggers version: unknown</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Client version: 0.15.0
+Pipeline version: v0.19.0</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
