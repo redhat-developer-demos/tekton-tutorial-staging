@@ -1424,7 +1424,8 @@ source-lister   7 minutes ago</code></pre>
   --inputresource='source=git-source' \<i class="conum" data-value="2"></i><b>(2)</b>
   --outputresource='builtImage=tekton-tutorial-greeter-image' \<i class="conum" data-value="3"></i><b>(3)</b>
   --param contextDir='springboot' \<i class="conum" data-value="4"></i><b>(4)</b>
-  --showlog<i class="conum" data-value="5"></i><b>(5)</b></code></pre>
+  --param destinationImage='image-registry.openshift-image-registry.svc:5000/tektontutorial/tekton-tutorial-greeter-image' \<i class="conum" data-value="5"></i><b>(5)</b>
+  --showlog<i class="conum" data-value="6"></i><b>(6)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -1440,6 +1441,18 @@ source-lister   7 minutes ago</code></pre>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
 <td>The output resource mapping, i.e. mapping output <code>builtImage</code> to PipelineResource <code>built-image</code> of type <code>image</code></td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>The directory inside repository where to do the build</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>The image repository URL where we want to push the image into.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Keep following the build logs</td>
 </tr>
 </table>
 </div>
