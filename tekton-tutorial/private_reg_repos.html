@@ -72,24 +72,10 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="pipeline-resources.html">Pipeline Resources</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pipeline-resources.html#tekton-res-prerequisite">Prerequisites</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pipeline-resources.html#tekton-res-create">Create Pipeline Resource</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pipeline-resources.html#tekton-res-deploy">Deploy Pipeline Resource</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pipeline-resources.html#tkn-see-what-you-have-deployed">See what you have deployed</a>
-  </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="tasks.html">Tasks</a>
@@ -399,8 +385,7 @@
   <div class="content">
 <article class="doc">
 <h1 class="page">Using Private Repositories and Registries</h1>
-<div class="sect1">
-<h2 id="_using_private_repositories_and_registries"><a class="anchor" href="#_using_private_repositories_and_registries"></a>Using Private Repositories and Registries</h2>
+<div id="preamble">
 <div class="sectionbody">
 <div class="admonitionblock warning">
 <table>
@@ -409,7 +394,7 @@
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-This chapter build is in progress, expect to change and not working as expected
+Currently, there is an incompatibility between Tekton pipelines webhook and Minikube. Please expect no logs when running tkn commands .
 </td>
 </tr>
 </table>
@@ -510,11 +495,10 @@ export TEKTON_TUTORIAL_GITHUB_PAT='&lt;your github.com username personal accesst
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create secret -n workspace-auth-demo generic github-pat-secret --dry-run=client -o yaml \
-  | yq w - type kubernetes.io/basic-auth \
-  | yq w - stringData.username $GITHUB_USERNAME \
-  | yq w - stringData.password $TEKTON_TUTORIAL_GITHUB_PAT \
-  | kubectl apply -f -</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create secret generic github-pat-secret \
+    --type=kubernetes.io/basic-auth \
+    --from-literal=username=$GITHUB_USERNAME \
+    --from-literal=password=$TEKTON_TUTORIAL_GITHUB_PAT</code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
@@ -789,7 +773,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export CONTAINER_REGISTRY_SERVER='https://quay.io' <i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export CONTAINER_REGISTRY_SERVER='quay.io' <i class="conum" data-value="1"></i><b>(1)</b>
 export CONTAINER_REGISTRY_USER='&lt;your registry user&gt;'
 export CONTAINER_REGISTRY_PASSWORD='&lt;your registry user password&gt;'</code></pre>
 </div>
@@ -798,7 +782,7 @@ export CONTAINER_REGISTRY_PASSWORD='&lt;your registry user password&gt;'</code><
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The container registry server URL, for Quay.io its <a href="https://quay.io" class="bare">https://quay.io</a> and for DockerHub it is <a href="https://index.docker.io/v2/" class="bare">https://index.docker.io/v2/</a></td>
+<td>The container registry server URL, for Quay.io its quay.io and for DockerHub it is <a href="https://index.docker.io/v2/" class="bare">https://index.docker.io/v2/</a></td>
 </tr>
 </table>
 </div>
@@ -874,6 +858,30 @@ secrets:
 - name: build-bot-token-8nl2v</code></pre>
 </div>
 </div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="title">Running Tasks with privileged access on OpenShift</div>
+<div class="paragraph">
+<p>Sometimes, Tekton Tasks or ClusterTasks require privileged access to create certain Kubernetes resources.
+Using a service account and adding it to a security policy is the safe way to run those kind of Tasks or ClusterTasks.</p>
+</div>
+<div class="paragraph">
+<p>For our example, we should run the following command:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc adm policy add-scc-to-user anyuid -z build-bot -n workspace-auth-demo</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
 </div>
 <div class="sect2">
 <h3 id="tekton-create-build-push-pipeline"><a class="anchor" href="#tekton-create-build-push-pipeline"></a>Create Pipeline</h3>
@@ -914,7 +922,8 @@ secrets:
   --serviceaccount=build-bot \
   --workspace name=maven-settings,config=maven-settings \
   --workspace name=source,claimName=tekton-tutorial-sources \
-  --use-param-defaults \
+  --param app-profile='quarkus' \
+  --param image-name=$CONTAINER_REGISTRY_SERVER/$CONTAINER_REGISTRY_USER/tekton-tutorial-greeter  \
   --showlog</code></pre>
 </div>
 </div>
@@ -933,6 +942,13 @@ metadata:
     tekton.dev/pipeline: greeter-app-build
 spec:
   serviceAccountName: build-bot
+  params:
+    - name: app-profile
+      value: quarkus
+    # enable this for OpenShift
+    #    - name: storageDriver
+    #      value: vfs
+    -
   pipelineRef:
     name: greeter-app-build
   workspaces:

@@ -72,24 +72,10 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="pipeline-resources.html">Pipeline Resources</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pipeline-resources.html#tekton-res-prerequisite">Prerequisites</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pipeline-resources.html#tekton-res-create">Create Pipeline Resource</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pipeline-resources.html#tekton-res-deploy">Deploy Pipeline Resource</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="pipeline-resources.html#tkn-see-what-you-have-deployed">See what you have deployed</a>
-  </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="tasks.html">Tasks</a>
@@ -401,18 +387,6 @@
 <h1 class="page">Triggers</h1>
 <div id="preamble">
 <div class="sectionbody">
-<div class="admonitionblock warning">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-warning" title="Warning"></i>
-</td>
-<td class="content">
-This chapter build is in progress, expect to change and not working as expected
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p>At the end of this chapter you will be able to :</p>
 </div>
@@ -457,7 +431,7 @@ kubectl config set-context --current --namespace triggers-demo</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As part of this exercise we will need to install the following external tasks to be installed in the namespace:</p>
+<p>As part of this exercise we will need to install the following external tasks and cluster tasks to be installed in the namespace:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -468,7 +442,7 @@ kubectl config set-context --current --namespace triggers-demo</code></pre>
 <p><a href="https://github.com/tektoncd/catalog/tree/master/task/maven/0.1">maven</a></p>
 </li>
 <li>
-<p><a href="https://github.com/tektoncd/catalog/tree/master/task/buildah/0.1">buildah</a></p>
+<p><a href="https://raw.githubusercontent.com/openshift/tektoncd-pipeline-operator/master/deploy/resources/addons/02-clustertasks/buildah/buildah-task.yaml">buildah</a></p>
 </li>
 <li>
 <p><a href="https://github.com/tektoncd/catalog/tree/master/task/kn/0.1">knative client(kn)</a></p>
@@ -480,7 +454,7 @@ kubectl config set-context --current --namespace triggers-demo</code></pre>
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n triggers-demo \
   -f <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/git-clone/0.1/git-clone.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/git-clone/0.1/git-clone.yaml</a> \
   -f <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/maven/0.1/maven.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/maven/0.1/maven.yaml</a> \
-  -f <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/buildah/0.1/buildah.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/buildah/0.1/buildah.yaml</a> \
+  -f <a href="https://raw.githubusercontent.com/openshift/tektoncd-pipeline-operator/master/deploy/resources/addons/02-clustertasks/buildah/buildah-task.yaml" class="bare">https://raw.githubusercontent.com/openshift/tektoncd-pipeline-operator/master/deploy/resources/addons/02-clustertasks/buildah/buildah-task.yaml</a> \
   -f <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/kn/0.1/kn.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/kn/0.1/kn.yaml</a> \
   -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/workspaces/list-directory-task.yaml">$TUTORIAL_HOME/workspaces/list-directory-task.yaml</a></code></pre>
 </div>
@@ -570,7 +544,7 @@ service/nexus        NodePort    10.100.205.22   &lt;none&gt;        8081:31743/
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl expose svc -n triggers-demo nexus</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc expose svc -n triggers-demo nexus</code></pre>
 </div>
 </div>
 </div>
@@ -598,8 +572,8 @@ service/nexus        NodePort    10.100.205.22   &lt;none&gt;        8081:31743/
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get -n triggers-demo cm maven-settings -oyaml \
-  | yq r - data['settings.xml']</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get -n triggers-demo cm maven-settings -o yaml \
+    -o jsonpath='{.data}'</code></pre>
 </div>
 </div>
 <div class="paragraph">
